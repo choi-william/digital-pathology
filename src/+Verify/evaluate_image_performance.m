@@ -103,7 +103,7 @@ function [GT,TP,FP,FN] = evaluate_image_performance(dpid,shouldPlot)
         h(2) = plot(NaN,NaN,'.b','MarkerSize',20);
         h(3) = plot(NaN,NaN,'.','color',[1 0 1],'MarkerSize',20);
         h(4) = plot(NaN,NaN,'.','color','yellow','MarkerSize',20);
-        h(4) = plot(NaN,NaN,'.','color',[0,0,0],'MarkerSize',20);
+        h(5) = plot(NaN,NaN,'.','color',[0,0,0],'MarkerSize',20);
 
         legend(h, 'False Positive','False Negative','Match','Rejected by NN','Clump constituent','Location','southeast');
     end
