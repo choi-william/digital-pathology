@@ -75,7 +75,7 @@ function [list,dp] = extract_soma( dpimage, alg, lsb, th, useDeepFilter, th_alph
         dpimage.rawThresh = bwIm;
 
         % Filtering by object size
-        somaIm = Helper.sizeFilter(bwIm,lsb, 1000000);
+        somaIm = Helper.sizeFilter(bwIm,lsb, 3000);
 
         % Resulting binary image of the soma
 %         figure, imshow(somaIm);
@@ -122,8 +122,7 @@ function [list,dp] = extract_soma( dpimage, alg, lsb, th, useDeepFilter, th_alph
         [row,col] = ind2sub(comp.ImageSize,comp.PixelIdxList{i});
         
         prepared = prepare_soma(DPCell([col,row],dpimage)); 
-        % Loop through the cells since there could be multiple detected
-        % from resolving clumps
+        % 
         for j=1:size(prepared,2)
             dpcell = prepared{j};            
 
