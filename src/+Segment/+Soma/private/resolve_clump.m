@@ -28,7 +28,7 @@ function [ flag, somas ] = resolve_clump( dpcell )
       out = imerode(out,strel('disk',1));
 %     out = imcomplement(out);
 %     
-    comp = bwconncomp(imcomplement(out));  
+    comp = bwconncomp(out);  
     
 %     imshow([adjusted; mumfordIm; 255*imregionalmin(mumfordIm); 255*out;]);
     
@@ -42,7 +42,7 @@ function [ flag, somas ] = resolve_clump( dpcell )
         row = row + dpcell.TL(2)-1; %convert to image coordinates
         col = col + dpcell.TL(1)-1; %convert to image coordinates
 
-        if (size(row,1) < 100)
+        if (size(row,1) < 40)
            continue;  %too small- discard
         end
         
