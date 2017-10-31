@@ -39,9 +39,8 @@ function [ flag, somas ] = resolve_clump( dpcell )
         mask(round(A(2)),round(A(1))) = 1;                
     end
     adjusted(imcomplement(mask)) = 255;
-%     mumfordIm = smooth_ms(adjusted, 0.005, 300);    
-%     out = imbinarize(mumfordIm);
-%     comp = bwconncomp(~out); 
+    mumfordIm = smooth_ms(adjusted, 0.005, 300);    
+    out = imbinarize(mumfordIm);
     
     % Multi-Thresholding
     % IMAGE QUANTIZATION using Otsu's mutilevel iamge thresholding
@@ -50,33 +49,42 @@ function [ flag, somas ] = resolve_clump( dpcell )
     quantIm = imquantize(adjusted, thresh);
     
     % SOMA DETECTION
-    minSomaSize = 60;
+    minSomaSize = 50;
     newQuantIm = zeros(size(adjusted));
 
     addedObjects = zeros(size(adjusted));
     numCountedObjects = zeros(1, N+1);
     testIm = zeros(size(adjusted));
     for i = 1:N+1
-        levelIm = quantIm <= i;
+        levelIm = quantIm == i;
+        levelIm = levelIm + addedObjects + (newQuantIm>0);
 
+        countedObjects = bwareaopen(levelIm, minSomaSize)- (newQuantIm>0);
+        addedObjects = xor(levelIm, countedObjects); % removing objects greater than min soma size
+
+        % size filtered level added to the newly quantized image
+        newQuantIm = newQuantIm + (countedObjects*i);
+        B = newQuantIm ~= 0;
+        CC = bwconncomp(B);
+        numCountedObjects(i) = CC.NumObjects;
+        %
         countedObjects = bwareaopen(levelIm,minSomaSize);
         CC = bwconncomp(countedObjects);
-        if CC.NumObjects ~= 0 
-            for j = 1:CC.NumObjects
-                componentIm = false(size(adjusted));
-                componentIm(CC.PixelIdxList{j}) = 1;
-                overlapIm = and(testIm,componentIm);
-                if sum(overlapIm(:)) > 0
-                    countedObjects(componentIm) = 0;
-                end
+        for j = 1:CC.NumObjects
+            componentIm = false(size(adjusted));
+            componentIm(CC.PixelIdxList{j}) = 1;
+            if sum(and(testIm,componentIm)) > 0
+                countedObjects(componentIm) = 0;
             end
-            testIm = or(testIm, countedObjects);
         end
+        testIm = or(testIm, countedObjects);
     end
+    
+
     
 %     imshow([adjusted; mumfordIm; 255*out;]);
     
-    comp = bwconncomp(testIm);  
+    comp = bwconncomp(~out);  
 
     somas = {};
     for i=1:comp.NumObjects

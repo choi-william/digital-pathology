@@ -45,7 +45,6 @@ function [ bwIm ] = process_segmentation( rgbCellImage, cellCentroid )
         B = newQuantIm ~= 0;
         CC = bwconncomp(B);
         numCountedObjects(i) = CC.NumObjects;
-
     end
      
 %     x = 1:N+1;
