@@ -23,7 +23,7 @@ meta_path = strcat(out_path,strcat('/','meta.mat'));
 
 data=[];
 dpids=[];
-load('+Annotation/annotation_data.mat');
+load('+Annotation/annotation_data_asma.mat');
 
 found_dpids = [];
 files = dir('../data/train/');
