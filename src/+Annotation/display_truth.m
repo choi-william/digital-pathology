@@ -1,10 +1,9 @@
-load('+Annotation/annotation_data.mat');
+load('+Annotation/annotation_data_asma.mat');
 
 dpid = dpids(randi(length(dpids)));
 
 points = data(data(:,1)==dpid,:);
 points = points(:,2:end);
-
 
 image_name = ['../data/train/', num2str(dpid),'.tif']
 image = imread(image_name);

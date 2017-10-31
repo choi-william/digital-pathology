@@ -55,7 +55,7 @@ function [GT,TP,FP,FN] = evaluate_image_performance(dpid,shouldPlot)
             end
             if (d < soma.maxRadius)
                 inside_mask = pixelListBinarySearch(round(soma.pixelList),round(true_point));
-                if (d < 10 || inside_mask)
+                if (d < 10 || (inside_mask && d<30))
                    fp(j) = 0;
                    fn(i) = 0;
                    break;                 
