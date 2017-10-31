@@ -19,7 +19,7 @@ function [GT,TP,FP,FN] = evaluate_image_performance(dpid,shouldPlot)
 
     data=[];
     dpids=[];
-    load('+Annotation/annotation_data.mat');
+    load('+Annotation/annotation_data_asma.mat');
 
     if (~any(dpids==dpid))
         error('cant evaluate an image that hasnt been annotated')
