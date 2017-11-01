@@ -10,7 +10,7 @@ function [] = output_classifier()
     run init.m
 
     %find data folder
-    out_path = '../data/formatted/';
+    out_path = '../data/formatted_double/';
     
     load('../data/formatted/meta.mat');
 

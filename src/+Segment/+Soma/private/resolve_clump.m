@@ -13,10 +13,7 @@ function [ flag, somas ] = resolve_clump( dpcell )
 
     rgbIm = dpcell.subImage;
 
-    adjusted = imadjust(rgb2gray(rgbIm),[0; 1],[0; 1]);
-    
-    whites = adjusted>180;
-    adjusted(whites) = mean(adjusted(~whites));
+    adjusted = imadjust(rgb2gray(rgbIm),[0; 0.5],[0; 1]);
     
     mumfordIm = smooth_ms(adjusted, 0.005, 300);
     
@@ -35,8 +32,9 @@ function [ flag, somas ] = resolve_clump( dpcell )
     %only take the binary image that coincides with the cell clump
     out = ~((~out) .* mask);
     
-%     imshow([adjusted; mumfordIm; 255*out;]);
-    
+%     figure;
+%     imshow([rgb2gray(rgbIm); adjusted; 255*mask; mumfordIm; 255*out;]);
+%     
     comp = bwconncomp(~out);  
 
     somas = {};
@@ -47,7 +45,7 @@ function [ flag, somas ] = resolve_clump( dpcell )
         col = col + dpcell.TL(1)-1; %convert to image coordinates
 
         if (size(row,1) < 50)
-           continue;  %too small- discard
+           continue;  %vtoo small- discard
         end
         
         centr = round(sum([col,row],1)/size(row,1)); %x-y coordinates

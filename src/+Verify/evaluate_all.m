@@ -6,15 +6,22 @@
 % of segmentation algorithm
 
 function [] = evaluate_all()
+    PARALLEL_PROCESSING = 0;
+    
+    tic
+    
+    if (PARALLEL_PROCESSING) % don't forget to switch FOR/PARFOR below
+        parpool; % matlabpool;
+    end % 
 
     %We will need to divide the dpids into sections
     
     %mapping from ddpid to brain slide function
     % slide = mapping(ddpid)
 
-	data=[];
+    data=[];
 	dpids=[];
-	load('+Annotation/annotation_data.mat');
+	load('+Annotation/annotation_data_asma.mat');
 
     found_dpids = [];
     files = dir('../data/train/');
@@ -37,27 +44,34 @@ function [] = evaluate_all()
 
 	testing_dpids = setdiff(dpids,training_dpids);
 
-	total_GT = 0;
-	total_TP = 0;
-	total_FP = 0;
-	total_FN = 0;
+    iteration_length = size(testing_dpids,1);
+	total_GT = zeros(iteration_length,1);
+	total_TP = zeros(iteration_length,1);
+	total_FP = zeros(iteration_length,1);
+	total_FN = zeros(iteration_length,1);
 
-	for i=1:size(testing_dpids,1)
+	for i=1:iteration_length
 		dpid = testing_dpids(i);
 
 		[GT,TP,FP,FN] = Verify.evaluate_image_performance(dpid);
 
-		total_GT=total_GT+GT;
-		total_TP=total_TP+TP;
-		total_FP=total_FP+FP;
-		total_FN=total_GT+FN;
+		total_GT(i)=GT;
+		total_TP(i)=TP;
+		total_FP(i)=FP;
+		total_FN(i)=FN;
         
-        fprintf('done %d out of %d\n',i,size(testing_dpids,1));
+        fprintf('done %d out of %d\n',i,iteration_length);
         %then above ^ each total would be an array indexed by slide
     end
 
-    total_GT
-    total_TP
-    total_FP
-    total_FN
+    sum(total_GT)
+    sum(total_TP)
+    sum(total_FP)
+    sum(total_FN)
+    
+    if (PARALLEL_PROCESSING)
+        delete(gcp); % matlabpool close;
+    end
+    
+    toc
 end

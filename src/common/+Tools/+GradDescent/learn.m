@@ -7,6 +7,15 @@
 % parameters and that you correctly set the cost function in the private
 % folder
 
+
+%TH alpha
+%TH beta
+%MS A
+%MS B
+%intensity_percentile
+%clump_discard_size
+
+
 function [P_f, C ] = learn(iterations, step_length, bounds, p_jump, P_o )
 
     %iterations is number of iterations
@@ -16,8 +25,7 @@ function [P_f, C ] = learn(iterations, step_length, bounds, p_jump, P_o )
     %step_length represents the maximum step traversal represented as a
     %   decimal percentage of bound size
 
-    dps = Pipeline.import_dp([],'trainNosham');
-    size(dps);
+
     P = zeros(iterations,size(P_o,2));
     P(1,:) = P_o; %initial parameters
     
@@ -27,14 +35,14 @@ function [P_f, C ] = learn(iterations, step_length, bounds, p_jump, P_o )
     B = bounds(2,:) - bounds(1,:);
     
     for i=1:iterations
-       C(i) = cost(dps,P(i,:));
+       C(i) = cost(P(i,:));
        fprintf('Score (i=%d): %f with (%f,%f)\n',i,C(i),P(i,1),P(i,2));
       
        for j = 1:size(P_o,2) %calculate gradients
            b=zeros(1,size(p_jump,2));
            b(j) = 1;
            dP = b.*p_jump;
-           G(j) = (cost(dps, P(i,:)+dP)-C(i))/(sum(dP));
+           G(j) = (cost(P(i,:)+dP)-C(i))/(sum(dP));
        end
        G = G.*B'; %to correct for gradient biasing
        G = G.*B'; %to correct for how parameters are adjusted
@@ -62,6 +70,5 @@ function [P_f, C ] = learn(iterations, step_length, bounds, p_jump, P_o )
           end
        end
     end
-
 end
 

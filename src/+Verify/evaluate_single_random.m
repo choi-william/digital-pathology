@@ -11,7 +11,7 @@ while k <= length(files)
     k = k + 1;
 end
 
-for i = 1:1
+for i = 1:5
 %     Verify.evaluate_image_performance(found_dpids(3),2);
     Verify.evaluate_image_performance(found_dpids(randi(length(found_dpids))),2);
 end

@@ -100,7 +100,7 @@ classdef DPCell
                 end
             end
             if count_intensities == 0
-                obj.centroid = round([x1,y1]/(count_pixels));
+                obj.centroid = round([x1,y1]/(count_intensities));
             else
                 obj.centroid = round([sumX,sumY]/(count_intensities));
             end

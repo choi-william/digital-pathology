@@ -20,8 +20,9 @@ function [list,dp] = extract_soma( dpimage, alg, lsb, th, useDeepFilter, th_alph
         th_alpha = 0.3;
     end    
     if ~exist('th','var')
-        th = (dpimage.avInt*th_alpha+25)/100;
-        th = 0.3;
+        g = rgb2gray(dpimage.image);
+        int = mean2(g(g<200));
+        th = (int*th_alpha+25)/(1.8*100);
     end
     if ~exist('useDeepFilter','var')
         useDeepFilter=1;
@@ -65,7 +66,7 @@ function [list,dp] = extract_soma( dpimage, alg, lsb, th, useDeepFilter, th_alph
         grayIm = imsharpen(grayIm);
         
         % Mumford-Shah smoothing
-        mumfordIm = smooth_ms(grayIm, 0.3, 300);
+        mumfordIm = smooth_ms(grayIm, 0.2, 300);
 %         figure, imshow(mumfordIm);
 
         % Global Thresholding 

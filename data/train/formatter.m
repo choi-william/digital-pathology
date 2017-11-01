@@ -1,8 +1,0 @@
-files = dir
-k= 1;
-while k <= length(files)
-    if endsWith(files(k).name,'.tif')
-        movefile(files(k).name,strip(files(k).name,'left','0'));        
-    end
-    k = k + 1;
-end
