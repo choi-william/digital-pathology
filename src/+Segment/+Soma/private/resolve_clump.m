@@ -26,16 +26,68 @@ function [ flag, somas ] = resolve_clump( dpcell )
         A = dpcell.pixelList(i,:);
         A = round(A-dpcell.TL)+[1,1]; %adjust for soma image
         mask(round(A(2)),round(A(1))) = 1;                
-    end
+    end  
+    
+    out = ~((~out) .* mask);
+
+
+
+% FOR MULTITHRESHOLDING STUFF
 
     
-    %only take the binary image that coincides with the cell clump
-    out = ~((~out) .* mask);
+%     adjusted = imadjust(rgb2gray(rgbIm),[0;get_av_soma_intensity(dpcell)/255],[0;1]);
     
+%     dim = size(adjusted);
+%     mask = false(dim(1:2));
+%     for i=1:size(dpcell.pixelList,1)
+%         A = dpcell.pixelList(i,:);
+%         A = round(A-dpcell.TL)+[1,1]; %adjust for soma image
+%         mask(round(A(2)),round(A(1))) = 1;                
+%     end
+%     adjusted(imcomplement(mask)) = 255;
+    
+%     mumfordIm = smooth_ms(adjusted, 0.005, 300);    
+%     out = imbinarize(mumfordIm);
+%     comp = bwconncomp(~out); 
+    
+    % Multi-Thresholding
+    % IMAGE QUANTIZATION using Otsu's mutilevel iamge thresholding
+%     N = 10; % number of thresholds % temporary changed to 13 from 20
+%     thresh = multithresh(adjusted, N);
+%     quantIm = imquantize(adjusted, thresh);
+%     
+%     % SOMA DETECTION
+%     minSomaSize = 60;
+%     newQuantIm = zeros(size(adjusted));
+% 
+%     addedObjects = zeros(size(adjusted));
+%     numCountedObjects = zeros(1, N+1);
+%     testIm = zeros(size(adjusted));
+%     for i = 1:N+1
+%         levelIm = quantIm <= i;
+% 
+%         countedObjects = bwareaopen(levelIm,minSomaSize);
+%         CC = bwconncomp(countedObjects);
+%         if CC.NumObjects ~= 0 
+%             for j = 1:CC.NumObjects
+%                 componentIm = false(size(adjusted));
+%                 componentIm(CC.PixelIdxList{j}) = 1;
+%                 overlapIm = and(testIm,componentIm);
+%                 if sum(overlapIm(:)) > 0
+%                     countedObjects(componentIm) = 0;
+%                 end
+%             end
+%             testIm = or(testIm, countedObjects);
+%         end
+%     end
+%     
 %     figure;
 %     imshow([rgb2gray(rgbIm); adjusted; 255*mask; mumfordIm; 255*out;]);
-%     
-    comp = bwconncomp(~out);  
+%         
+    %MULTITHRESHOLDING STUFF
+%     comp = bwconncomp(testIm);  
+
+    comp = bwconncomp(~out);
 
     somas = {};
     for i=1:comp.NumObjects
