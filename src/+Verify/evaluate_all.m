@@ -21,7 +21,7 @@ function [] = evaluate_all()
 
     data=[];
 	dpids=[];
-	load('+Annotation/annotation_data_asma.mat');
+	load('+Annotation/annotation_data_combined.mat');
 
     found_dpids = [];
     files = dir('../data/train/');

@@ -1,23 +1,22 @@
 NMethods = 5;
+% 
+% [ld,ll] = ML.Logistic.logistic_train();
+% fprintf('done Logistic');
+% [sd,sl] = ML.SVM.svm_train();
+% fprintf('done SVM');
+% [rd,rl] = ML.RF.rf_train();
+% fprintf('done RF');
+% [ad,al] = ML.Adaboost.ada_train();
+% fprintf('done ADA');
+% [nd,nl] = ML.NN.nn_train();
+% fprintf('done neural network');
+% 
+% decisions = {ld,sd,rd,ad,nd};
+% labels = {ll,sl,rl,al,nl};
+% 
+% save('+ML/assess_models_intermediate.mat','decisions','labels');
 
-[ld,ll] = ML.Logistic.logistic_train();
-fprintf('done Logistic');
-[sd,sl] = ML.SVM.svm_train();
-fprintf('done SVM');
-[rd,rl] = ML.RF.rf_train();
-fprintf('done RF');
-[ad,al] = ML.Adaboost.ada_train();
-fprintf('done ADA');
-[nd,nl] = ML.NN.nn_train();
-fprintf('done neural network');
-
-decisions = {ld,sd,rd,ad,nd};
-labels = {ll,sl,rl,al,nl};
-
-save('+ML/assess_models_intermediate.mat','decisions','labels');
-
-% load('+ML/assess_models_intermediate.mat','decisions','labels');
-
+load('+ML/assess_models_intermediate.mat','decisions','labels');
 TH = 0:0.01:1;
 
 result = zeros(length(TH),2,NMethods);
@@ -30,6 +29,7 @@ for b = 1:NMethods
         average = zeros(2,2);
         for j = 1:size(dec,2)
             Yclass = dec(:,j) >= TH(k);
+            clear predictedLabels;
             for i=1:length(Yclass)
                 if Yclass(i) == 1
                     predictedLabels(i) = "falsePositives";

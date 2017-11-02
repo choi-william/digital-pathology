@@ -17,10 +17,6 @@ path_tp = strcat(out_path,strcat('/',tp_class));
 path_fp = strcat(out_path,strcat('/',fp_class));
 meta_path = strcat(out_path,strcat('/','meta.mat'));
 
-data=[];
-dpids=[];
-load('+Annotation/annotation_data_asma.mat');
-
 found_dpids = [];
 files = dir('../data/train/');
 k= 1;
@@ -32,8 +28,6 @@ while k <= length(files)
     end
     k = k + 1;
 end
-
-dpids = intersect(found_dpids,dpids);
 
 set1 = load('+Annotation/annotation_data_asma.mat');
 data1=set1.data;
