@@ -9,6 +9,6 @@ function [av] = get_av_soma_intensity(soma)
 
         intensities = [intensities double(gray(A(2),A(1)))];
     end
-    av = prctile(intensities,30); %gets lower nth percentile intensity
+    av = prctile(intensities,15); %gets lower nth percentile intensity
 end
 

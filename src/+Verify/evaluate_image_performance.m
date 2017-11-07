@@ -15,11 +15,17 @@ function [GT,TP,FP,FN] = evaluate_image_performance(dpid,shouldPlot)
 
     dp = DPImage(dpid);
 
+    im = rgb2gray(dp.image);
+    whites = im>230;
+    if sum(whites(:)) > 10000
+       fprintf('THIS IS PROBABLY A BAD ONE\n');
+    end
+    
     [found_soma,dp] = Segment.Soma.extract_soma(dp);
 
     data=[];
     dpids=[];
-    load('+Annotation/annotation_data_asma.mat');
+    load('+Annotation/annotation_data_union.mat');
 
     if (~any(dpids==dpid))
         error('cant evaluate an image that hasnt been annotated')
@@ -50,17 +56,25 @@ function [GT,TP,FP,FN] = evaluate_image_performance(dpid,shouldPlot)
             end
             soma = found_soma{j};
             d = Helper.CalcDistance(true_point,soma.centroid);
+
             if soma.isFalsePositive == 1
                 continue;
             end
-            if (d < soma.maxRadius)
-                inside_mask = pixelListBinarySearch(round(soma.pixelList),round(true_point));
-                if (d < 10 || (inside_mask && d<30))
-                   fp(j) = 0;
-                   fn(i) = 0;
-                   break;                 
-                end
+            
+            if (d < 20)
+               fp(j) = 0;
+               fn(i) = 0;
+               break;                 
             end
+            
+%             if (d < soma.maxRadius)
+%                 inside_mask = pixelListBinarySearch(round(soma.pixelList),round(true_point));
+%                 if (d < 15 || (inside_mask && d<30))
+%                    fp(j) = 0;
+%                    fn(i) = 0;
+%                    break;                 
+%                 end
+%             end
         end
     end
     
@@ -68,7 +82,10 @@ function [GT,TP,FP,FN] = evaluate_image_performance(dpid,shouldPlot)
     if (shouldPlot == 2)
         figure('units','normalized','outerposition',[0 0 1 1]);
 
-         totalIm = [dp.image dp.image repmat(dp.preThresh,1,1,3) repmat(dp.somaMask*255,1,1,3)];
+        grayIm = rgb2gray(dp.image);
+        grayIm = grayIm + (255-mean(grayIm(grayIm<200)));
+        
+         totalIm = [dp.image dp.image repmat(grayIm,1,1,3) repmat(dp.preThresh,1,1,3) repmat(dp.somaMask*255,1,1,3)];
          imshow(totalIm,'InitialMagnification','fit');
 
          hold on;

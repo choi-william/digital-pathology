@@ -9,7 +9,7 @@
 % Uses this to generate classes of false positive and true positive cell identifications
 
 global dataPath;
-out_path = uigetdir('../data/formatted/','Choose output folder');
+out_path = uigetdir('../data/formatted_original_union/','Choose output folder');
 
 tp_class = 'truePositives';
 fp_class = 'falsePositives';
@@ -23,7 +23,7 @@ meta_path = strcat(out_path,strcat('/','meta.mat'));
 
 data=[];
 dpids=[];
-load('+Annotation/annotation_data_asma.mat');
+load('+Annotation/annotation_data_union.mat');
 
 found_dpids = [];
 files = dir('../data/train/');
@@ -66,7 +66,7 @@ for i=1:size(training_dpids,1)
             d = Helper.CalcDistance(true_point,soma.centroid);
             if (d < soma.maxRadius)
                 inside_mask = pixelListBinarySearch(round(soma.pixelList),round(true_point));
-                if (d < 10 || inside_mask)
+                if (d < 15 || inside_mask)
                    fp(j) = 0;
                    break;                 
                 end

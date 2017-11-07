@@ -11,15 +11,26 @@ function [dpsomas ] = prepare_soma( dpsoma )
 
         flag = 0;
         
-        MIN_CLUMP_AREA = 500;
+        MIN_CLUMP_AREA = Config.get_config('MIN_CLUMP_AREA');
+        MAX_CLUMP_AREA = Config.get_config('MAX_CLUMP_AREA');
 
         dpsoma = somaBoundBox(dpsoma,0); %adds box properties to the soma        
         dpsoma.cnnBox = Tools.get_block(dpsoma.referenceDPImage.image,round(dpsoma.centroid));
-
+        if (dpsoma.area > MAX_CLUMP_AREA)
+            dpsomas = {};
+            return
+        end
+               
         % now try to resolve clumps
-        
-        if (dpsoma.isClump == 0 && dpsoma.area > MIN_CLUMP_AREA)
-            [flag,somas] = resolve_clump(dpsoma); 
+        if (dpsoma.isClump == 0)
+            if(dpsoma.area > MIN_CLUMP_AREA)
+                [flag,somas] = resolve_clump(dpsoma); 
+                
+                if flag == 0
+                   dpsomas = {};
+                   return
+                end
+            end
         end
         
         if (flag == 1)

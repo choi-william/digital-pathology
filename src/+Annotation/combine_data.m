@@ -4,7 +4,8 @@
 
 global dataPath;
 
-combined_data = [];
+intersect_data = [];
+union_data = [];
 
 set1 = load('+Annotation/annotation_data_asma.mat');
 data1=set1.data;
@@ -45,21 +46,42 @@ for i=1:size(common_dpids,1)
                unique_to_1(k) = 0;
                unique_to_2(j) = 0;
                if rand(2) == 1
-                  combined_data = [combined_data; dpid point1(1) point1(2)]; 
+                  intersect_data = [intersect_data; dpid point1(1) point1(2)]; 
                else
-                  combined_data = [combined_data; dpid point2(1) point2(2)];                   
+                  intersect_data = [intersect_data; dpid point2(1) point2(2)];                   
                end
                break;                 
             end
         end
     end
+    
+    for k=1:size(unique_to_1,1)
+        if (unique_to_1(k) == 1)
+            point1 = round(dpid_data1(k,:));
+            union_data = [union_data; dpid point1(1) point1(2)]; 
+        end
+    end
+    for k=1:size(unique_to_2,1)
+        if (unique_to_2(k) == 1)
+            point2 = round(dpid_data2(k,:));
+            union_data = [union_data; dpid point2(1) point2(2)]; 
+        end
+    end
     fprintf('done %d of %d\n',i,size(common_dpids,1));
-
 end
 
+union_data = [union_data; intersect_data];
+
+
 dpids = common_dpids;
-data = combined_data;
-save('+Annotation/annotation_data_combined.mat','dpids','data');
+data = intersect_data;
+save('+Annotation/annotation_data_intersect.mat','dpids','data');
+size(data)
+
+dpids = common_dpids;
+data = union_data;
+save('+Annotation/annotation_data_union.mat','dpids','data');
+size(data)
 
 
 

@@ -13,11 +13,12 @@ function [decisions,result_labels] = nn_train()
 
 
     %find data folder
-    out_path = '../data/formatted/';
+    out_path = '../data/formatted_normalized/';
 
     %set categories
     categories = {'falsePositives', 'truePositives'};
     imds = imageDatastore(fullfile(out_path, categories), 'LabelSource', 'foldernames');
+    imds.ReadFcn = @(filename)readAndPreprocessImage(filename);
 
     %split into equal pieces
     tbl = countEachLabel(imds);
@@ -63,6 +64,8 @@ function [decisions,result_labels] = nn_train()
 
         options = trainingOptions('sgdm',...
             'MaxEpochs',40, ... 
+            'ValidationData',testSet,...
+            'ValidationFrequency',5,...
             'InitialLearnRate',0.001);
 
         classifier = trainNetwork(trainingSet,layers,options);
@@ -70,7 +73,7 @@ function [decisions,result_labels] = nn_train()
         Yprob = predict(classifier, testSet);
         decisions = [decisions Yprob(:,1)];
         result_labels = [result_labels testSet.Labels];
-        Yclass = Yprob(:,1) > 0.7;
+        Yclass = Yprob(:,1) > 0.5;
         for i=1:length(Yclass)
             if Yclass(i) == 1
                 predictedLabels(i) = "falsePositives";
@@ -87,4 +90,16 @@ function [decisions,result_labels] = nn_train()
 
     end
     average
+end
+
+function Iout = readAndPreprocessImage(filename)
+
+    I = imread(filename);
+
+    % Some images may be grayscale. Replicate the image 3 times to
+    % create an RGB image.
+    if ismatrix(I)
+        I = cat(3,I,I,I);
+    end
+    Iout = I;
 end

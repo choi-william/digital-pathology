@@ -12,12 +12,13 @@ function [ flag, somas ] = resolve_clump( dpcell )
     Iobrcbr = dpcell.oImage;
 
     rgbIm = dpcell.subImage;
+    
 
-    adjusted = imadjust(rgb2gray(rgbIm),[0; 0.5],[0; 1]);
+    adjusted = imadjust(rgb2gray(rgbIm),[0; Config.get_config('CLUMP_ADJUST_THRESHOLD')],[0; 1]);
     
-    mumfordIm = smooth_ms(adjusted, 0.005, 300);
+    mumfordIm = smooth_ms(adjusted, Config.get_config('CLUMP_MUMFORD_SHAH_LAMBDA'), Inf);
     
-    out = imbinarize(mumfordIm,get_av_soma_intensity(dpcell)/255);
+    out = imbinarize(mumfordIm,Config.get_config('CLUMP_THRESHOLD'));
     
     %find the mask of the actual cell clump
     dim = size(adjusted);
@@ -27,7 +28,7 @@ function [ flag, somas ] = resolve_clump( dpcell )
         A = round(A-dpcell.TL)+[1,1]; %adjust for soma image
         mask(round(A(2)),round(A(1))) = 1;                
     end  
-    
+   
     out = ~((~out) .* mask);
 
 
@@ -96,7 +97,7 @@ function [ flag, somas ] = resolve_clump( dpcell )
         row = row + dpcell.TL(2)-1; %convert to image coordinates
         col = col + dpcell.TL(1)-1; %convert to image coordinates
 
-        if (size(row,1) < 50)
+        if (size(row,1) < Config.get_config('CLUMP_THRESHOLD_MIN_SIZE'))
            continue;  %vtoo small- discard
         end
         

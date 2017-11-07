@@ -12,6 +12,8 @@ dpids2=set2.dpids;
 
 common_dpids = intersect(dpids1,dpids2);
 
+length(common_dpids)
+
 for l=1:5
     dpid = common_dpids(randi(length(common_dpids)));
 

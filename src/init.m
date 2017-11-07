@@ -4,6 +4,8 @@
 
 %close all;
 clear;
+global global_config;
+global_config = [];
 
 addpath(genpath('library'));
 addpath common;
