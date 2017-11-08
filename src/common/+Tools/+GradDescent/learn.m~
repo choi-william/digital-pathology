@@ -19,9 +19,9 @@ function [P_f, C ] = learn()
     %step_length represents the maximum step traversal represented as a
     %   decimal percentage of bound size
     
-    global_config.LOWER_SIZE_BOUND = 30;
-    global_config.MUMFORD_SHAH_LAMBDA = 0.05;
-    global_config.DEEP_FILTER_THRESHOLD = 0.5;   
+        global_config.LOWER_SIZE_BOUND = 30;
+        global_config.MUMFORD_SHAH_LAMBDA = 0.05;
+        global_config.DEEP_FILTER_THRESHOLD = 0.5;   
 
     
     P_o = [30, 0.1, 0.5];
@@ -29,7 +29,7 @@ function [P_f, C ] = learn()
     max = [100,0.5,1];
     min = [0,0,0];
     bounds = [min; max;];
-    step_length = [0.05,0.02,0.05];
+    step_length = [0.05,];
     
     iterations = 50;
 

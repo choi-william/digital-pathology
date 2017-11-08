@@ -5,8 +5,11 @@
 % Evaluates all previously annotated images to determine effectiveness
 % of segmentation algorithm
 
-function [] = evaluate_all(label_set, prediction_set)
+function [GT,TP,FP,FN] = evaluate_all(label_set, prediction_set,set_type)
 
+    if ~exist('set_type','var')
+        set_type = 'validate';
+    end   
     if ~exist('label_set','var')
         label_set = 'intersect';
     end   
@@ -35,8 +38,15 @@ function [] = evaluate_all(label_set, prediction_set)
             %only training folder
             dpids = training_set_dpids;
             
-            %take only what we didn't train on
-            dpids = setdiff(dpids,training_dpids);
+            if strcmp(set_type,'validate')
+                dpids = setdiff(dpids,training_dpids);
+            elseif strcmp(set_type,'train')
+                dpids = intersect(dpids,training_dpids);                
+            end
+                        
+            %remove bad images
+            dpids = remove_edge_images(dpids);
+            
             data = get_extraction_data(dpids);
         otherwise
             error('invalid parameter');
@@ -60,8 +70,15 @@ function [] = evaluate_all(label_set, prediction_set)
             %only training folder
             dpids = training_set_dpids;
             
-            %take only what we didn't train on
-            dpids = setdiff(dpids,training_dpids);
+            if strcmp(set_type,'validate')
+                dpids = setdiff(dpids,training_dpids);
+            elseif strcmp(set_type,'train')
+                dpids = intersect(dpids,training_dpids);                
+            end
+            
+            %remove bad images
+            dpids = remove_edge_images(dpids);
+            
             data = get_extraction_data(dpids);
         otherwise
             error('invalid parameter');
@@ -77,18 +94,24 @@ function [] = evaluate_all(label_set, prediction_set)
     prediction_data = prediction_data(ismember(prediction_data(:,1),prediction_dpids),:);    
     
     %now make sure we are only working on the validation set
-    label_dpids = setdiff(label_dpids,training_dpids);
-    label_data = label_data(ismember(label_data(:,1),label_dpids),:);
+ 
+    if strcmp(set_type,'validate')
+        label_dpids = setdiff(label_dpids,training_dpids);    
+        prediction_dpids = setdiff(prediction_dpids,training_dpids);
+    elseif strcmp(set_type,'train')
+        label_dpids = intersect(label_dpids,training_dpids);    
+        prediction_dpids = intersect(prediction_dpids,training_dpids);            
+    else
+        error('BAD');
+    end
     
-    prediction_dpids = setdiff(prediction_dpids,training_dpids);
+    label_data = label_data(ismember(label_data(:,1),label_dpids),:);
     prediction_data = prediction_data(ismember(prediction_data(:,1),prediction_dpids),:);
     
     %only take the common dpids between them;
     common_dpids = intersect(label_dpids,prediction_dpids);
     label_data = label_data(ismember(label_data(:,1),common_dpids),:);
     prediction_data = prediction_data(ismember(prediction_data(:,1),common_dpids),:);
-
     
-    [GT,TP,FP,FN] = Verify.compare_data(common_dpids,label_data,prediction_data)
-    
+    [GT,TP,FP,FN] = Verify.compare_data(common_dpids,label_data,prediction_data);
 end

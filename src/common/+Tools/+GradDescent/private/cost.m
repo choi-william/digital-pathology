@@ -4,16 +4,12 @@
 
 % The cost function by which the gradient descent operates
 
-function [score] = cost( dps, P )
-    score = 0;
-    
-    %TESTING FUNCTION
-    %score = sin(P(1)*pi/2)*sin(P(2)*pi/2) - 1; 
-    
-    for i=1:size(dps,2)
-        [a,addedScore] = Verify.evaluate_soma(Segment.Soma.extract_soma(dps(i),2,P(1),round(P(2))),0);
-        score = score + addedScore;
-    end
-    score = score/size(dps,2);
+function [cost,TP,FP,FN] = cost(P)
+    Config.set_config('LOWER_SIZE_BOUND',P(1));
+    Config.set_config('MUMFORD_SHAH_LAMBDA',P(2));
+    Config.set_config('DEEP_FILTER_THRESHOLD',P(3));
+
+    [GT,TP,FP,FN] = Verify.evaluate_all('union','algorithm');
+    cost = TFP + 3*TFN;
 end
 

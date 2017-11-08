@@ -21,11 +21,16 @@ function [list,dp] = extract_soma( dpimage )
 
     % Mumford-Shah smoothing
     mumfordIm = smooth_ms(grayIm, Config.get_config('MUMFORD_SHAH_LAMBDA'), -1);
-    Iobrcbr = Tools.smooth_ocbrc(mumfordIm,2);
 
-    bwIm = ~imregionalmin(imadjust(Iobrcbr,[0; Config.get_config('WHITE_DISCARD_THRESHOLD')],[0; 1]));
+    %quantize so imregionalmin is more robust
+    tolerance = 5;
+    ths = tolerance:tolerance:(255-tolerance);
+    values = round((tolerance/2):tolerance:255);
+    mumfordIm = uint8(imquantize(mumfordIm,ths,values));
+    
+    bwIm = ~imregionalmin(imadjust(mumfordIm,[0; Config.get_config('WHITE_DISCARD_THRESHOLD')],[0; 1]));
 
-    dpimage.preThresh = Iobrcbr;
+    dpimage.preThresh = mumfordIm;
     dpimage.rawThresh = bwIm;
 
     % Filtering by object size

@@ -8,7 +8,7 @@ function [GT,TP,FP,FN] = compare_data(dpids,label_data,prediction_data)
     TP = 0;
     FN = 0;
     FP = 0;
-
+    
     for k=1:size(dpids,1)
         dpid = dpids(k);
 
