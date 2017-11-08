@@ -10,6 +10,6 @@ function [cost,TP,FP,FN] = cost(P)
     Config.set_config('DEEP_FILTER_THRESHOLD',P(3));
 
     [GT,TP,FP,FN] = Verify.evaluate_all('union','algorithm');
-    cost = TFP + 3*TFN;
+    cost = FP + 3*FN;
 end
 
