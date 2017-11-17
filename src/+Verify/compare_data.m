@@ -12,11 +12,18 @@ function [GT,TP,FP,FN] = compare_data(dpids,label_data,prediction_data)
     for k=1:size(dpids,1)
         dpid = dpids(k);
 
-        dpid_label_data = label_data(label_data(:,1) == dpid, :);
-        dpid_prediction_data = prediction_data(prediction_data(:,1) == dpid, :);
-        
-        dpid_label_data = dpid_label_data(:,2:end);
-        dpid_prediction_data = dpid_prediction_data(:,2:end);
+        if ~isempty(label_data)
+            dpid_label_data = label_data(label_data(:,1) == dpid, :);
+            dpid_label_data = dpid_label_data(:,2:end);
+        else
+            dpid_label_data = [];
+        end
+        if ~isempty(prediction_data)
+            dpid_prediction_data = prediction_data(prediction_data(:,1) == dpid, :);
+            dpid_prediction_data = dpid_prediction_data(:,2:end);
+        else
+            dpid_prediction_data = [];            
+        end
 
         dpid_FN = ones(size(dpid_label_data,1),1);
         dpid_FP = ones(size(dpid_prediction_data,1),1);

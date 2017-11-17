@@ -1,7 +1,8 @@
 function [ data,dpids ] = get_extraction_data(dpids)
 
     all_data = {};
-    parfor i=1:size(dpids,1)
+    
+    for i=1:size(dpids,1)
         dpid = dpids(i);
         current_data= [];
         found_soma = Segment.Soma.extract_soma(DPImage(dpid));

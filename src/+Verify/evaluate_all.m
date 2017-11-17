@@ -18,9 +18,10 @@ function [GT,TP,FP,FN] = evaluate_all(label_set, prediction_set,set_type)
     end   
     
     training_dpids = [];
-    load('+ML/deep_learning_model_2.mat');
+    load('+ML/deep_learning_model_all.mat');
     
     training_set_dpids = find_dpids('train');
+    testing_set_dpids = find_dpids('test');
     
     %%%
     %GET LABEL DATA
@@ -41,7 +42,11 @@ function [GT,TP,FP,FN] = evaluate_all(label_set, prediction_set,set_type)
             if strcmp(set_type,'validate')
                 dpids = setdiff(dpids,training_dpids);
             elseif strcmp(set_type,'train')
-                dpids = intersect(dpids,training_dpids);                
+                dpids = intersect(dpids,training_dpids);
+            elseif strcmp(set_type,'test')
+                dpids = testing_set_dpids;
+            else
+                error('invalid evaluation set');
             end
                         
             %remove bad images
@@ -74,6 +79,10 @@ function [GT,TP,FP,FN] = evaluate_all(label_set, prediction_set,set_type)
                 dpids = setdiff(dpids,training_dpids);
             elseif strcmp(set_type,'train')
                 dpids = intersect(dpids,training_dpids);                
+            elseif strcmp(set_type,'test')
+                dpids = testing_set_dpids;
+            else
+                error('invalid evaluation set');
             end
             
             %remove bad images
@@ -87,31 +96,51 @@ function [GT,TP,FP,FN] = evaluate_all(label_set, prediction_set,set_type)
     prediction_data = data;
     
     %discard testing set
-    label_dpids = intersect(label_dpids,training_set_dpids);
-    label_data = label_data(ismember(label_data(:,1),label_dpids),:);
-    
-    prediction_dpids = intersect(prediction_dpids,training_set_dpids);
-    prediction_data = prediction_data(ismember(prediction_data(:,1),prediction_dpids),:);    
+
     
     %now make sure we are only working on the validation set
  
     if strcmp(set_type,'validate')
+        %take entire training set
+        label_dpids = intersect(label_dpids,training_set_dpids);
+        prediction_dpids = intersect(prediction_dpids,training_set_dpids);
+        
+        %take validation part of training set
         label_dpids = setdiff(label_dpids,training_dpids);    
         prediction_dpids = setdiff(prediction_dpids,training_dpids);
     elseif strcmp(set_type,'train')
+        %take entire training set
+        label_dpids = intersect(label_dpids,training_set_dpids);
+        prediction_dpids = intersect(prediction_dpids,training_set_dpids);
+        
+        %take training part of training set
         label_dpids = intersect(label_dpids,training_dpids);    
-        prediction_dpids = intersect(prediction_dpids,training_dpids);            
+        prediction_dpids = intersect(prediction_dpids,training_dpids); 
+    elseif strcmp(set_type,'test')
+        
+        %get entire testing set
+        label_dpids = intersect(label_dpids,testing_set_dpids);
+        prediction_dpids = intersect(prediction_dpids,testing_set_dpids);
     else
         error('BAD');
     end
     
-    label_data = label_data(ismember(label_data(:,1),label_dpids),:);
-    prediction_data = prediction_data(ismember(prediction_data(:,1),prediction_dpids),:);
-    
+    %get only data contained in dpids
+    if ~isempty(label_data)
+        label_data = label_data(ismember(label_data(:,1),label_dpids),:);
+    end
+    if ~isempty(prediction_data)
+        prediction_data = prediction_data(ismember(prediction_data(:,1),prediction_dpids),:);
+    end
     %only take the common dpids between them;
     common_dpids = intersect(label_dpids,prediction_dpids);
-    label_data = label_data(ismember(label_data(:,1),common_dpids),:);
-    prediction_data = prediction_data(ismember(prediction_data(:,1),common_dpids),:);
+    if ~isempty(label_data)
+        label_data = label_data(ismember(label_data(:,1),common_dpids),:);
+    end
+    if ~isempty(prediction_data)
+        prediction_data = prediction_data(ismember(prediction_data(:,1),common_dpids),:);
+    end
     
-    [GT,TP,FP,FN] = Verify.compare_data(common_dpids,label_data,prediction_data);
+    [GT,TP,FP,FN] = Verify.compare_data(common_dpids,label_data,prediction_data)
+    fprintf('Precision: %f, Recall: %f',TP/(TP+FP),TP/(TP+FN));
 end

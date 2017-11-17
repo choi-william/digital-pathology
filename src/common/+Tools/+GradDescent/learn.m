@@ -19,9 +19,9 @@ function [P_f, C ] = learn()
     %step_length represents the maximum step traversal represented as a
     %   decimal percentage of bound size
     
-    global_config.LOWER_SIZE_BOUND = 30;
-    global_config.MUMFORD_SHAH_LAMBDA = 0.05;
-    global_config.DEEP_FILTER_THRESHOLD = 0.5;   
+%     global_config.LOWER_SIZE_BOUND = 30;
+%     global_config.MUMFORD_SHAH_LAMBDA = 0.05;
+%     global_config.DEEP_FILTER_THRESHOLD = 0.5;   
 
     
     P_o = [30, 0.1, 0.5];
@@ -31,7 +31,7 @@ function [P_f, C ] = learn()
     bounds = [min; max;];
     step_length = [0.05,0.02,0.05];
     
-    iterations = 50;
+    iterations = 10;
 
     P = zeros(iterations,size(P_o,2));
     P(1,:) = P_o; %initial parameters
@@ -42,9 +42,10 @@ function [P_f, C ] = learn()
     B = bounds(2,:) - bounds(1,:);
     
     for i=1:iterations
-       C(i) = cost(P(i,:));
-       fprintf('Score (i=%d): %f with (%f,%f)\n',i,C(i),P(i,1),P(i,2));
-      
+       [the_cost,TP,FP,FN] = cost(P(i,:));
+       C(i) = the_cost;
+       fprintf('Score (i=%d): %f with (%d,%d,%d)\n',i,C(i),TP,FP,FN);
+       P(i,:)
        for j = 1:size(P_o,2) %calculate gradients
            b=zeros(1,size(p_jump,2));
            b(j) = 1;
@@ -59,7 +60,7 @@ function [P_f, C ] = learn()
            break;
        end
        
-       G = (G)*step_length/norm(G./B');
+       G = (G).*step_length'/norm(G./B');
        
        if (i == iterations)
            P_f = P(i,:);

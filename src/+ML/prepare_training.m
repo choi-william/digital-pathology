@@ -9,7 +9,7 @@
 % Uses this to generate classes of false positive and true positive cell identifications
 
 global dataPath;
-out_path = uigetdir('../data/formatted_original_union/','Choose output folder');
+out_path = uigetdir('../data/nn_all_train/','Choose output folder');
 
 tp_class = 'truePositives';
 fp_class = 'falsePositives';
@@ -41,19 +41,21 @@ dpids = intersect(found_dpids,dpids);
 data = data(ismember(data(:,1),found_dpids),:);
 
 %create a training/testing split in dpids
-training_percentage = 0.7;
+training_percentage = 1.0;
 setlength = randperm(size(dpids,1));
 
 training_dpids = dpids(setlength(1:floor(size(setlength,2)*training_percentage)),:);
 
 save(meta_path,'training_dpids');
 
+Config.set_config('USE_DEEP_FILTER',0);
+
 count = 1;
 for i=1:size(training_dpids,1)
     dpid = training_dpids(i);
     dpim = DPImage(dpid); 
     
-    found_soma = Segment.Soma.extract_soma(dpim,1,0,0.3,0);
+    found_soma = Segment.Soma.extract_soma(dpim);
 
     ground_truth = data(data(:,1) == dpid, :);
     ground_truth = ground_truth(:,2:end);

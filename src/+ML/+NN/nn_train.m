@@ -13,7 +13,7 @@ function [decisions,result_labels] = nn_train()
 
 
     %find data folder
-    out_path = '../data/formatted_normalized/';
+    out_path = '../data/nn_data_colour/';
 
     %set categories
     categories = {'falsePositives', 'truePositives'};
@@ -66,7 +66,7 @@ function [decisions,result_labels] = nn_train()
             'MaxEpochs',40, ... 
             'ValidationData',testSet,...
             'ValidationFrequency',5,...
-            'InitialLearnRate',0.001);
+            'InitialLearnRate',0.0001);
 
         classifier = trainNetwork(trainingSet,layers,options);
 

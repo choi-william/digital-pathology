@@ -60,7 +60,7 @@ end
 
 figure;
 hold on;
-title('Precision and Recall','FontSize',20);
+title('Classification Model Comparison','FontSize',20);
 xlabel('Recall','FontSize',15);
 ylabel('Precision','FontSize',15);
 ylim([0.5, 1]); 
@@ -68,10 +68,11 @@ xlim([0, 1]);
 
 grid on;
 
-plot(result(:,2,1),result(:,1,1),'DisplayName','Logistic Regression Ensemble','LineWidth',2);
-plot(result(:,2,2),result(:,1,2),'DisplayName','SVM','LineWidth',2);
-plot(result(:,2,3),result(:,1,3),'DisplayName','Random Forest','LineWidth',2);
-plot(result(:,2,4),result(:,1,4),'DisplayName','Adaboost','LineWidth',2);
-plot(result(:,2,5),result(:,1,5),'DisplayName','Neural Network','LineWidth',2);
+plot(result(:,2,1),result(:,1,1),'DisplayName','Logistic Regression Ensemble','LineWidth',3);
+plot(result(:,2,2),result(:,1,2),'DisplayName','SVM','LineWidth',3);
+plot(result(:,2,3),result(:,1,3),'DisplayName','Random Forest','LineWidth',3);
+plot(result(:,2,4),result(:,1,4),'DisplayName','Adaboost','LineWidth',3);
+plot(result(:,2,5),result(:,1,5),'DisplayName','Neural Network','LineWidth',3);
 
-legend('show');
+lgd = legend('show');
+lgd.FontSize = 18;

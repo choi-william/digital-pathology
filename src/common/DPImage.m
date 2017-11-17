@@ -50,15 +50,22 @@ classdef DPImage
 
             global config;
             obj.id = id;
-            filename = strcat('../data/train/',num2str(id),'.tif');
 
+            if ismember(id,Tools.find_dpids('train'))
+                filename = strcat('../data/train/',num2str(id),'.tif');
+            elseif ismember(id,Tools.find_dpids('test'))
+                filename = strcat('../data/test/',num2str(id),'.tif');
+                fprintf('WARNING: PULLING FROM TEST SET\n');
+            else
+                error('cant find image anywhere');
+            end
+            
             imPath = filename;     
 
             obj.filename = filename;
             obj.filepath = filename;
             obj.image = imread(filename);
             obj.image = obj.image(:,:,1:3);
-
 
             if (size(obj.image,2) > size(obj.image,1))
                obj.image = permute(obj.image, [2 1 3]);

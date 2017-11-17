@@ -42,7 +42,7 @@ function [list,dp] = extract_soma( dpimage )
     comp = bwconncomp(imcomplement(somaIm));
 
     if (Config.get_config('USE_DEEP_FILTER'))
-        file = load('+ML/deep_learning_model_2.mat'); 
+        file = load('+ML/deep_learning_model_all.mat'); 
         classifier = file.classifier;
         decision_threshold = file.decision_threshold;
     end
