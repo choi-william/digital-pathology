@@ -24,7 +24,7 @@ function [dpsomas ] = prepare_soma( dpsoma )
         % now try to resolve clumps
         if (dpsoma.isClump == 0)
             if(dpsoma.area > MIN_CLUMP_AREA)
-                fprintf('CLUMP RESOLVE\n');
+                %fprintf('CLUMP RESOLVE\n');
                 [flag,somas] = resolve_clump(dpsoma); 
                 
                 if flag == 0

@@ -10,9 +10,9 @@ function [] = output_classifier()
     run init.m
 
     %find data folder
-    out_path = '../data/nn_all_train/';
+    out_path = '../data/nn/';
     
-    load('../data/nn_all_train/meta.mat');
+    load('../data/nn/meta.mat');
 
     %set categories
     categories = {'falsePositives', 'truePositives'};
@@ -53,5 +53,5 @@ function [] = output_classifier()
 
     classifier = trainNetwork(imds,layers,options);
     decision_threshold = 0.5;
-    save('+ML/deep_learning_model_all.mat','classifier','decision_threshold','training_dpids');
+    save('+ML/deep_learning_model.mat','classifier','decision_threshold','training_dpids');
 end

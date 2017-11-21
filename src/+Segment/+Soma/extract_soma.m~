@@ -29,12 +29,8 @@ function [list,dp] = extract_soma( dpimage )
     mumfordIm = uint8(imquantize(mumfordIm,ths,values));
     
     bwIm = ~imregionalmin(imadjust(mumfordIm,[0; Config.get_config('WHITE_DISCARD_THRESHOLD')],[0; 1]));
-    bw_small_pieces = ~bitxor(~bwareaopen(~bwIm,10),bwIm);
-    mumfordIm(~bw_small_pieces) = 255;
+    bw_small_pieces = bitxor(~bwareaopen(~bwIm,10),bwIm);
     
-    bwIm = ~imregionalmin(mumfordIm);
-    bwIm = ~bitor(~bwIm,~bw_small_pieces);
-  
     dpimage.preThresh = mumfordIm;
     dpimage.rawThresh = bwIm;
 

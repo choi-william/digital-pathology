@@ -13,7 +13,7 @@ function [decisions,result_labels] = nn_train()
 
 
     %find data folder
-    out_path = '../data/nn_data_colour/';
+    out_path = '../data/nn/';
 
     %set categories
     categories = {'falsePositives', 'truePositives'};

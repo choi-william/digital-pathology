@@ -6,9 +6,10 @@ function [value] = get_config(param)
         %set the defaults
 
         %make sure to run init.m to reset the changes
+                
         global_config = [];
-        global_config.LOWER_SIZE_BOUND = 25;
-        global_config.MUMFORD_SHAH_LAMBDA = 0.14;
+        global_config.LOWER_SIZE_BOUND = 26;
+        global_config.MUMFORD_SHAH_LAMBDA = 0.067;
         global_config.WHITE_DISCARD_THRESHOLD = 0.9;
         global_config.MIN_CLUMP_AREA = 500;
         global_config.MAX_CLUMP_AREA = 10000;
@@ -17,7 +18,7 @@ function [value] = get_config(param)
         global_config.CLUMP_THRESHOLD = 0.9;  
         global_config.CLUMP_THRESHOLD_MIN_SIZE = 60;
         global_config.USE_DEEP_FILTER = 1;   
-        global_config.DEEP_FILTER_THRESHOLD = 0.5;   
+        global_config.DEEP_FILTER_THRESHOLD = 0.67;   
 
     end
     if exist('param','var')

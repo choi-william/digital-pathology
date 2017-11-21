@@ -18,8 +18,8 @@ function [] = evaluate_PR(set_type)
 %         recalls = [recalls; R];
 %         fprintf('Done %d of %d of evaluate_PR',i,length(X));
 %     end
-%     save('+Verify/evaluate_PR_intermdediate.mat','precisions','recalls');
-    load('+Verify/evaluate_PR_intermdediate.mat','precisions','recalls');
+%     save('+Verify/evaluate_PR_intermediate.mat','precisions','recalls');
+    load('+Verify/evaluate_PR_intermediate.mat','precisions','recalls');
     
     plot(recalls,precisions,'LineWidth',4);
     title({'Cell Detection Accuracy'},'FontSize',20);

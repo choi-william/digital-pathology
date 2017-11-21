@@ -14,7 +14,7 @@ function [ data,dpids ] = get_extraction_data(dpids)
             current_data = [current_data; dpid soma.centroid(1) soma.centroid(2)];
         end
         all_data{i} = current_data;
-        fprintf('Finished analyzing %d of %d\n',i,size(dpids,1));
+        %fprintf('Finished analyzing %d of %d\n',i,size(dpids,1));
     end
     
     data=[];

@@ -18,7 +18,7 @@ function [GT,TP,FP,FN] = evaluate_all(label_set, prediction_set,set_type)
     end   
     
     training_dpids = [];
-    load('+ML/deep_learning_model_all.mat');
+    load('+ML/deep_learning_model.mat');
     
     training_set_dpids = find_dpids('train');
     testing_set_dpids = find_dpids('test');
@@ -141,6 +141,6 @@ function [GT,TP,FP,FN] = evaluate_all(label_set, prediction_set,set_type)
         prediction_data = prediction_data(ismember(prediction_data(:,1),common_dpids),:);
     end
     
-    [GT,TP,FP,FN] = Verify.compare_data(common_dpids,label_data,prediction_data)
-    fprintf('Precision: %f, Recall: %f',TP/(TP+FP),TP/(TP+FN));
+    [GT,TP,FP,FN] = Verify.compare_data(common_dpids,label_data,prediction_data);
+    %fprintf('Precision: %f, Recall: %f',TP/(TP+FP),TP/(TP+FN));
 end

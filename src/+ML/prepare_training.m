@@ -8,8 +8,7 @@
 % sensitive version of our automated algorithm to compare against the annotated data set.
 % Uses this to generate classes of false positive and true positive cell identifications
 
-global dataPath;
-out_path = uigetdir('../data/nn_all_train/','Choose output folder');
+out_path = uigetdir('../data/nn_blue/','Choose output folder');
 
 tp_class = 'truePositives';
 fp_class = 'falsePositives';
@@ -25,23 +24,12 @@ data=[];
 dpids=[];
 load('+Annotation/annotation_data_union.mat');
 
-found_dpids = [];
-files = dir('../data/train/');
-k= 1;
-while k <= length(files)
-    if endsWith(files(k).name,'.tif')
-        filename = strip(files(k).name,'left','0');
-        num = str2num(filename(1:end-4));
-        found_dpids = [found_dpids num];
-    end
-    k = k + 1;
-end
-
+found_dpids = Tools.find_dpids('train');
 dpids = intersect(found_dpids,dpids);
 data = data(ismember(data(:,1),found_dpids),:);
 
 %create a training/testing split in dpids
-training_percentage = 1.0;
+training_percentage = 0.7;
 setlength = randperm(size(dpids,1));
 
 training_dpids = dpids(setlength(1:floor(size(setlength,2)*training_percentage)),:);

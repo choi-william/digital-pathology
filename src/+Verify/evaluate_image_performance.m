@@ -95,22 +95,22 @@ function [GT,TP,FP,FN] = evaluate_image_performance(dpid,shouldPlot)
 
             if (fp(j) == 1)
                 if soma.isFalsePositive == 1
-                    %plot(4*size(dp.image,2)+soma.centroid(1)+0*size(dp.image,2),soma.centroid(2),'.','MarkerSize',20,'color','yellow');  
+                    plot(4*size(dp.image,2)+soma.centroid(1)+0*size(dp.image,2),soma.centroid(2),'.','MarkerSize',20,'color','yellow');  
                 else
-                    %plot(4*size(dp.image,2)+soma.centroid(1)+0*size(dp.image,2),soma.centroid(2),'.','MarkerSize',20,'color','red');   
+                    plot(4*size(dp.image,2)+soma.centroid(1)+0*size(dp.image,2),soma.centroid(2),'.','MarkerSize',20,'color','red');   
                 end
             elseif (fp(j) == 0)
-                plot(4*size(dp.image,2)+soma.centroid(1)+0*size(dp.image,2),soma.centroid(2),'.','MarkerSize',20,'color','green');
+                plot(4*size(dp.image,2)+soma.centroid(1)+0*size(dp.image,2),soma.centroid(2),'.','MarkerSize',20,'color',[1 0 1]);
             end
             
             if (soma.isClump)
-                %plot(4*size(dp.image,2)+soma.centroid(1)+0*size(dp.image,2),soma.centroid(2),'.','MarkerSize',10,'color',[0 0 0]);
+                plot(4*size(dp.image,2)+soma.centroid(1)+0*size(dp.image,2),soma.centroid(2),'.','MarkerSize',10,'color',[0 0 0]);
             end
         end  
         for j=1:size(fn,1)
             if (fn(j) == 1)
                 tp = round(ground_truth(j,:));
-                %plot(4*size(dp.image,2)+tp(1)+0*size(dp.image,2),tp(2),'.','MarkerSize',20,'color','blue');
+                plot(4*size(dp.image,2)+tp(1)+0*size(dp.image,2),tp(2),'.','MarkerSize',20,'color','blue');
             end
         end
 

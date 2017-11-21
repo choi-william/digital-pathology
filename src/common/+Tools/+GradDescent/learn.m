@@ -23,15 +23,18 @@ function [P_f, C ] = learn()
 %     global_config.MUMFORD_SHAH_LAMBDA = 0.05;
 %     global_config.DEEP_FILTER_THRESHOLD = 0.5;   
 
+%     Config.set_config('MIN_CLUMP_AREA',P(1));
+%     Config.set_config('CLUMP_MUMFORD_SHAH_LAMBDA',P(2));
+%     Config.set_config('CLUMP_THRESHOLD',P(3));
     
-    P_o = [30, 0.1, 0.5];
-    p_jump = [5,0.01,0.05];
+    P_o = [26, 0.067, 0.67];
+    p_jump = [2,0.01,0.05];
     max = [100,0.5,1];
     min = [0,0,0];
     bounds = [min; max;];
-    step_length = [0.05,0.02,0.05];
+    step_length = [0.01,0.01,0.01];
     
-    iterations = 10;
+    iterations = 50;
 
     P = zeros(iterations,size(P_o,2));
     P(1,:) = P_o; %initial parameters
