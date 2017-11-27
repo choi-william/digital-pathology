@@ -30,7 +30,7 @@ function [ output_args ] = visualize_slide( vis_type )
     owm = a(a>=0);
 
     maxval = max(owm(:)); %find maximum intensity
-    minval = min(owm(:)); %find maximum intensity
+    minval = min(owm(:)); %find minimum intensity
 
     map = colormap; %get current colormap (usually this will be the default one)
     a = floor((a-minval)./(maxval-minval)*length(map));

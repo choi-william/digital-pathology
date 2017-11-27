@@ -19,6 +19,7 @@ function [] = pathology_analysis(analysis_type, imagePath, outPath)
         an_path = outPath;
     end
     
+    % Determine the White Matter Regions
     DPslide = ROI.roi_finder(imagePath);
     
     sizeDPslide = size(DPslide,2);
@@ -39,8 +40,7 @@ function [] = pathology_analysis(analysis_type, imagePath, outPath)
     
     status = zeros(numrows*numcols,1);
 
-%     parpool;
-    
+    parpool;
 
     %necessary for displaying count due to parallel nature
     b = 0;
@@ -54,7 +54,7 @@ function [] = pathology_analysis(analysis_type, imagePath, outPath)
     
     tic
     brainSlide = imread(imagePath);
-    for linInd=1:(numcols*numrows)   
+    parfor linInd=1:(numcols*numrows)   
         slide(linInd) = DPslide(linInd).Label;
 
         if slide(linInd) == -99
@@ -87,7 +87,7 @@ function [] = pathology_analysis(analysis_type, imagePath, outPath)
     end
     toc
     
-%     delete(gcp);
+    delete(gcp);
     
     clearvars -except outputData1 outputData2 imagePath blockSize numrows numcols an_path file DPslide
     

@@ -3,6 +3,7 @@
 %   William Choi
 
 % block_analysis - performs microglia analysis on a particular DPImage
+% Return 0 for average_fractal if the analysis type is 1.
 
 function [cell_count, average_fractal] = block_analysis( dpimage, analysis_type, visual )
 %PATHOLOGY_ANALYSIS Summary of this function goes here
@@ -24,6 +25,8 @@ function [cell_count, average_fractal] = block_analysis( dpimage, analysis_type,
             fracDim(i) = cell_list{i}.fractalDim;
         end
         average_fractal = mean(fracDim(i));
+    else
+        average_fractal = 0;
     end
 end
 
