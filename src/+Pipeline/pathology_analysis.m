@@ -54,7 +54,7 @@ function [] = pathology_analysis(analysis_type, imagePath, outPath)
     
     tic
     brainSlide = imread(imagePath);
-    parfor linInd=1:(numcols*numrows)   
+    for linInd=1:(numcols*numrows)   
         slide(linInd) = DPslide(linInd).Label;
 
         if slide(linInd) == -99
@@ -77,7 +77,7 @@ function [] = pathology_analysis(analysis_type, imagePath, outPath)
             blue = im.image(:,:,3);
             im.avInt = mean(blue(:));
             
-            [cell_count, average_fractal] = block_analysis( im, analysis_type, 0 );
+            [cell_count, average_fractal] = Pipeline.block_analysis( im, analysis_type, 0 );
             outputData1(linInd) = cell_count;
             outputData2(linInd) = average_fractal;
             
@@ -87,7 +87,7 @@ function [] = pathology_analysis(analysis_type, imagePath, outPath)
     end
     toc
     
-    delete(gcp);
+%     delete(gcp);
     
     clearvars -except outputData1 outputData2 imagePath blockSize numrows numcols an_path file DPslide
     

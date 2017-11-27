@@ -29,7 +29,7 @@ dpids = intersect(found_dpids,dpids);
 data = data(ismember(data(:,1),found_dpids),:);
 
 %create a training/testing split in dpids
-training_percentage = 0.7;
+training_percentage = 1.0;
 setlength = randperm(size(dpids,1));
 
 training_dpids = dpids(setlength(1:floor(size(setlength,2)*training_percentage)),:);
@@ -66,16 +66,18 @@ for i=1:size(training_dpids,1)
 
     for j=1:size(found_soma,2)
         soma = found_soma{j};      
-
-        newim = Tools.get_block(dpim.image,soma.centroid);
-
-        image_name = strcat(num2str(count),'.tif');
-        count = count+1;
         
-        if (fp(j) == 1)
-            imwrite(newim,strcat(path_fp,'/',image_name));
-        else
-            imwrite(newim,strcat(path_tp,'/',image_name));
+        newim = Tools.get_block(dpim.image,soma.centroid);
+        image_array = Tools.rotate_image(newim);
+        
+        for k=1:size(image_array,1)
+            image_name = strcat(num2str(count),'.tif');
+            count = count+1;
+            if (fp(j) == 1)
+                imwrite(image_array{k},strcat(path_fp,'/',image_name));
+            else
+                imwrite(image_array{k},strcat(path_tp,'/',image_name));
+            end
         end
     end
 end

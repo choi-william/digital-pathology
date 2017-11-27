@@ -10,9 +10,9 @@ function [] = output_classifier()
     run init.m
 
     %find data folder
-    out_path = '../data/nn/';
+    out_path = '/Users/williamchoi/Desktop/CapstoneUne/dpv2/data/nn/';
     
-    load('../data/nn/meta.mat');
+    load('/Users/williamchoi/Desktop/CapstoneUne/dpv2/data/nn/meta.mat');
 
     %set categories
     categories = {'falsePositives', 'truePositives'};
@@ -49,7 +49,7 @@ function [] = output_classifier()
 
     options = trainingOptions('sgdm',...
         'MaxEpochs',11, ... 
-        'InitialLearnRate',0.001);
+        'InitialLearnRate',0.0001);
 
     classifier = trainNetwork(imds,layers,options);
     decision_threshold = 0.5;

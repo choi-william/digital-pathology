@@ -97,14 +97,16 @@ for i=1:size(training_dpids,1)
         soma = found_soma{j};      
 
         newim = Tools.get_block(dpim.image,soma.centroid);
-
-        image_name = strcat(num2str(count),'.tif');
-        count = count+1;
+        image_array = Tools.rotate_image(newim);
         
-        if (fp(j) == 1)
-            imwrite(newim,strcat(path_fp,'/',image_name));
-        else
-            imwrite(newim,strcat(path_tp,'/',image_name));
+        for k=1:size(image_array,1)
+            image_name = strcat(num2str(count),'.tif');
+            count = count+1;
+            if (fp(j) == 1)
+                imwrite(image_array{k},strcat(path_fp,'/',image_name));
+            else
+                imwrite(image_array{k},strcat(path_tp,'/',image_name));
+            end
         end
     end
 end

@@ -49,8 +49,12 @@ classdef DPImage
         function obj = DPImage(id)
 
             global config;
+            
+            if(id == 'notAFile')
+                return;
+            end
+            
             obj.id = id;
-
             if ismember(id,Tools.find_dpids('train'))
                 filename = strcat('../data/train/',num2str(id),'.tif');
             elseif ismember(id,Tools.find_dpids('test'))
