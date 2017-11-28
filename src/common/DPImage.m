@@ -50,7 +50,7 @@ classdef DPImage
 
             global config;
             
-            if(id == 'notAFile')
+            if(strcmp(id,'notAFile'))
                 return;
             end
             
@@ -60,6 +60,9 @@ classdef DPImage
             elseif ismember(id,Tools.find_dpids('test'))
                 filename = strcat('../data/test/',num2str(id),'.tif');
                 fprintf('WARNING: PULLING FROM TEST SET\n');
+            elseif startsWith(id,'s')
+                filename = strcat('../data/subImage_test/',id,'.tif');
+                fprintf('pulling from visualization set\n');
             else
                 error('cant find image anywhere');
             end

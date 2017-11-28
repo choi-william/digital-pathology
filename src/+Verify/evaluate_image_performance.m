@@ -31,8 +31,13 @@ function [GT,TP,FP,FN] = evaluate_image_performance(dpid,shouldPlot)
         error('cant evaluate an image that hasnt been annotated')
     end
 
-    ground_truth = data(data(:,1) == dpid, :);
-    ground_truth = ground_truth(:,2:end);
+    if (~ischar(dpid)) %in case we are looking at visualization images that don't have ground truth
+        ground_truth = data(data(:,1) == dpid, :);
+        ground_truth = ground_truth(:,2:end);       
+    else
+        ground_truth = [];
+    end
+
         
     fp = ones(size(found_soma,2),1);
     fn = ones(size(ground_truth,1),1);

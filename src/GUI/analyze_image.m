@@ -19,7 +19,7 @@ function [ output_args ] = analyze_image( handles, xCoord, yCoord )
                                 DPslide(linInd).Pos{2}(1)-DPslide(linInd).Pos{1}(1), DPslide(linInd).Pos{2}(2)-DPslide(linInd).Pos{1}(2)]);
 
     if outputData1(yCoord,xCoord) >= 0
-        imwrite(currentIm,strcat(save_path,['/' num2str(xCoord) num2str(yCoord) '.tif']));
+        imwrite(currentIm,strcat(save_path,['/s' num2str(xCoord) num2str(yCoord) '.tif']));
     else
         imshow('../anoush.png');
     end
