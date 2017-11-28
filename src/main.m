@@ -5,7 +5,7 @@
 run('init.m');
 
 %%% IF YOU WANT TO RUN THE FULL ANALYSIS ON AN .SVS or .TIF IMAGE
-Pipeline.pathology_analysis(1);
+% Pipeline.pathology_analysis(1);
 
 % Steps to running:
 %
@@ -72,7 +72,8 @@ Pipeline.pathology_analysis(1);
 % Display.display_stages(im007);
 % Display.display_stages(im008);
 
-% Verify.evaluate_PR('test');
+Verify.evaluate_PR('test');
+% Verify.evaluate_visualization_samples();
 
 
 
