@@ -8,7 +8,7 @@
 % sensitive version of our automated algorithm to compare against the annotated data set.
 % Uses this to generate classes of false positive and true positive cell identifications
 
-out_path = uigetdir('../data/nn_blue/','Choose output folder');
+out_path = uigetdir('../data/','Choose output folder');
 
 tp_class = 'truePositives';
 fp_class = 'falsePositives';
@@ -29,7 +29,7 @@ dpids = intersect(found_dpids,dpids);
 data = data(ismember(data(:,1),found_dpids),:);
 
 %create a training/testing split in dpids
-training_percentage = 0.7;
+training_percentage = 1.0;
 setlength = randperm(size(dpids,1));
 
 training_dpids = dpids(setlength(1:floor(size(setlength,2)*training_percentage)),:);
@@ -69,16 +69,84 @@ for i=1:size(training_dpids,1)
 
         newim = Tools.get_block(dpim.image,soma.centroid);
 
-        image_name = strcat(num2str(count),'.tif');
-        count = count+1;
         
         if (fp(j) == 1)
-            imwrite(newim,strcat(path_fp,'/',image_name));
+            image_name = strcat(num2str(count),'.tif');
+            count = count+1;
+            imwrite(imrotate(newim,0),strcat(path_fp,'/',image_name));
+            
+            image_name = strcat(num2str(count),'.tif');
+            count = count+1;
+            imwrite(imrotate(newim,90),strcat(path_fp,'/',image_name));
+            
+            image_name = strcat(num2str(count),'.tif');
+            count = count+1;
+            imwrite(imrotate(newim,180),strcat(path_fp,'/',image_name));
+            
+            image_name = strcat(num2str(count),'.tif');
+            count = count+1;
+            imwrite(imrotate(newim,270),strcat(path_fp,'/',image_name));
+
         else
-            imwrite(newim,strcat(path_tp,'/',image_name));
+            image_name = strcat(num2str(count),'.tif');
+            count = count+1;            
+            imwrite(imrotate(newim,0),strcat(path_tp,'/',image_name));
+            
+            image_name = strcat(num2str(count),'.tif');
+            count = count+1; 
+            imwrite(imrotate(newim,90),strcat(path_tp,'/',image_name));
+            
+            image_name = strcat(num2str(count),'.tif');
+            count = count+1; 
+            imwrite(imrotate(newim,180),strcat(path_tp,'/',image_name));
+            
+            image_name = strcat(num2str(count),'.tif');
+            count = count+1; 
+            imwrite(imrotate(newim,270),strcat(path_tp,'/',image_name));
         end
     end
 end
+
+size_tp = 0;
+k= 1;
+files_tp = dir(path_tp);
+while k <= length(files_tp)
+    if endsWith(files_tp(k).name,'.tif')
+        size_tp = size_tp + 1;
+    end
+    k = k + 1;
+end
+
+size_fp = 0;
+k= 1;
+files_fp = dir(path_fp);
+while k <= length(files_fp)
+    if endsWith(files_fp(k).name,'.tif')
+        size_fp = size_fp + 1;
+    end
+    k = k + 1;
+end       
+
+number_to_delete = size_fp - size_tp;
+
+rand_index = randperm(size(files_fp,1));
+mixed_files = files_fp(rand_index);
+
+k= 1;
+l= 1;
+while l <= number_to_delete
+    if endsWith(mixed_files(k).name,'.tif')
+        delete([path_fp,'/',mixed_files(k).name]);
+        l = l+1;
+    end
+    k = k + 1;
+end       
+
+
+
+
+
+
 
 
 

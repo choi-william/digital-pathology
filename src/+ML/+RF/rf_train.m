@@ -17,7 +17,7 @@ function [decisions,result_labels] = rf_train()
     decisions = [];
     result_labels = [];
     average = zeros(2,2);
-    iterations = 10;
+    iterations = 3;
     for k=1:iterations
         
         random_indeces = randperm(n);

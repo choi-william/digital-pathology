@@ -13,7 +13,7 @@ function [decisions,result_labels] = nn_train()
 
 
     %find data folder
-    out_path = '../data/nn/';
+    out_path = '../data/formatted/';
 
     %set categories
     categories = {'falsePositives', 'truePositives'};
@@ -35,7 +35,7 @@ function [decisions,result_labels] = nn_train()
     decisions = [];
     result_labels = [];
     average = zeros(2,2);
-    iterations = 5;
+    iterations = 3;
     for k=1:iterations
         [trainingSet, testSet] = splitEachLabel(imds, TRAINING_TESTING_SPLIT, 'randomize');
 
@@ -61,12 +61,10 @@ function [decisions,result_labels] = nn_train()
             fullyConnectedLayer(2)
             softmaxLayer
             classificationLayer];
-
+%             'ValidationData',testSet,...
+%             'ValidationFrequency',5,...
         options = trainingOptions('sgdm',...
-            'MaxEpochs',40, ... 
-            'ValidationData',testSet,...
-            'ValidationFrequency',5,...
-            'InitialLearnRate',0.0001);
+            'MaxEpochs',12,'InitialLearnRate',0.0001);
 
         classifier = trainNetwork(trainingSet,layers,options);
 
