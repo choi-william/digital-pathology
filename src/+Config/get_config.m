@@ -16,8 +16,8 @@ function [value] = get_config(param)
         %make sure to run init.m to reset the changes
                 
         global_config = [];
-        global_config.LOWER_SIZE_BOUND = 26;
-        global_config.MUMFORD_SHAH_LAMBDA = 0.067;
+        global_config.LOWER_SIZE_BOUND = 40;
+        global_config.MUMFORD_SHAH_LAMBDA = 0.15;
         global_config.WHITE_DISCARD_THRESHOLD = 0.9;
         global_config.MIN_CLUMP_AREA = 500;
         global_config.MAX_CLUMP_AREA = 10000;
