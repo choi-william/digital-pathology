@@ -27,12 +27,12 @@ function [P_f, C ] = learn()
 %     Config.set_config('CLUMP_MUMFORD_SHAH_LAMBDA',P(2));
 %     Config.set_config('CLUMP_THRESHOLD',P(3));
     
-    P_o = [26, 0.067, 0.67];
-    p_jump = [2,0.01,0.05];
-    max = [100,0.5,1];
-    min = [0,0,0];
+    P_o = [30.4143, 0.1591];% initialization param
+    p_jump = [2,0.01];% smallest unit that each of the parameter jumps
+    max = [100,0.5];% bounds
+    min = [0,0]; % bound
     bounds = [min; max;];
-    step_length = [0.01,0.01,0.01];
+    step_length = [0.05,0.05];
     
     iterations = 50;
 

@@ -66,47 +66,26 @@ for i=1:size(training_dpids,1)
 
     for j=1:size(found_soma,2)
         soma = found_soma{j};      
-
+        
         newim = Tools.get_block(dpim.image,soma.centroid);
 
+        image_array = Tools.rotate_image(newim);
         
-        if (fp(j) == 1)
+        for k=1:size(image_array,1)
             image_name = strcat(num2str(count),'.tif');
             count = count+1;
-            imwrite(imrotate(newim,0),strcat(path_fp,'/',image_name));
-            
-            image_name = strcat(num2str(count),'.tif');
-            count = count+1;
-            imwrite(imrotate(newim,90),strcat(path_fp,'/',image_name));
-            
-            image_name = strcat(num2str(count),'.tif');
-            count = count+1;
-            imwrite(imrotate(newim,180),strcat(path_fp,'/',image_name));
-            
-            image_name = strcat(num2str(count),'.tif');
-            count = count+1;
-            imwrite(imrotate(newim,270),strcat(path_fp,'/',image_name));
-
-        else
-            image_name = strcat(num2str(count),'.tif');
-            count = count+1;            
-            imwrite(imrotate(newim,0),strcat(path_tp,'/',image_name));
-            
-            image_name = strcat(num2str(count),'.tif');
-            count = count+1; 
-            imwrite(imrotate(newim,90),strcat(path_tp,'/',image_name));
-            
-            image_name = strcat(num2str(count),'.tif');
-            count = count+1; 
-            imwrite(imrotate(newim,180),strcat(path_tp,'/',image_name));
-            
-            image_name = strcat(num2str(count),'.tif');
-            count = count+1; 
-            imwrite(imrotate(newim,270),strcat(path_tp,'/',image_name));
+            if (fp(j) == 1)
+                imwrite(image_array{k},strcat(path_fp,'/',image_name));
+            else
+                imwrite(image_array{k},strcat(path_tp,'/',image_name));
+            end
         end
     end
 end
 
+%evens out the classes to remove variability when assessing different
+%models, since alexnet features takes a different set than what neural
+%network might take if there were more FP than TP
 size_tp = 0;
 k= 1;
 files_tp = dir(path_tp);

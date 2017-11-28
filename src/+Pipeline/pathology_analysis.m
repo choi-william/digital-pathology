@@ -19,6 +19,7 @@ function [] = pathology_analysis(analysis_type, imagePath, outPath)
         an_path = outPath;
     end
     
+    % Determine the White Matter Regions
     DPslide = ROI.roi_finder(imagePath);
     
     sizeDPslide = size(DPslide,2);
@@ -39,8 +40,7 @@ function [] = pathology_analysis(analysis_type, imagePath, outPath)
     
     status = zeros(numrows*numcols,1);
 
-%     parpool;
-    
+    parpool;
 
     %necessary for displaying count due to parallel nature
     b = 0;
@@ -77,7 +77,7 @@ function [] = pathology_analysis(analysis_type, imagePath, outPath)
             blue = im.image(:,:,3);
             im.avInt = mean(blue(:));
             
-            [cell_count, average_fractal] = block_analysis( im, analysis_type, 0 );
+            [cell_count, average_fractal] = Pipeline.block_analysis( im, analysis_type, 0 );
             outputData1(linInd) = cell_count;
             outputData2(linInd) = average_fractal;
             
