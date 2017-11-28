@@ -10,6 +10,12 @@ function [cell_count, average_fractal] = block_analysis( dpimage, analysis_type,
 %   analysis_type = 0 cell count & cell morphology
 %   analysis_type = 1 cell count
 
+    if (Tools.is_edge_image(dpimage))
+        cell_count = -1;
+        average_fractal = -1;
+        return
+    end
+    
     if (nargin == 1) visual = 0; end
 
     cell_list = Segment.cell_segmentation(dpimage,visual);

@@ -12,10 +12,7 @@ function [GT,TP,FP,FN] = evaluate_image_performance(dpid,shouldPlot)
     end   
 
     dp = DPImage(dpid);
-
-    im = rgb2gray(dp.image);
-    whites = im>230;
-    if sum(whites(:)) > 10000
+    if Tools.is_edge_image(dp)
        fprintf('THIS IS PROBABLY A BAD ONE\n');
     end
     
