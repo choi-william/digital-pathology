@@ -17,9 +17,16 @@ function [ cell_list ] = cell_segmentation( dpimage, visual )
 
     if (nargin == 1) visual = 0; end
 
+    cell_list={};
     % Soma Segmentation
-    [cell_list,dp] = Segment.Soma.extract_soma(dpimage);
+    [positive_detections,dp] = Segment.Soma.extract_soma(dpimage);
     
+    for i=1:size(positive_detections,2)
+        cell = positive_detections{i};
+        if cell.isFalsePositive == 0
+            cell_list{end+1} = cell;
+        end
+    end
     length = size(cell_list,2);
 
     im = dp.image;
