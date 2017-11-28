@@ -1,3 +1,11 @@
+% University of British Columbia, Vancouver, 2017
+%   Alex Kyriazis
+%   William Choi
+
+% Samples that are saved from the brain visualization interface are
+% automatically collected and have their cell segmentation displayed by
+% this file
+
 close all;
 found_dpids = {};
 files = dir('../data/subImage_test/');

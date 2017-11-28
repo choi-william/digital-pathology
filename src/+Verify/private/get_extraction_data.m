@@ -1,3 +1,9 @@
+% University of British Columbia, Vancouver, 2017
+%   Alex Kyriazis
+%   William Choi
+
+% Gets our algorithm's output data in the same format as labelled data 
+
 function [ data,dpids ] = get_extraction_data(dpids)
 
     all_data = {};

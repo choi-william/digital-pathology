@@ -5,8 +5,6 @@
 % Evaluates a previously annotated image to determine effectiveness
 % of segmentation algorithm.
 
-% Precondition: the specified dpimage was annotated already
-
 function [GT,TP,FP,FN] = evaluate_image_performance(dpid,shouldPlot)
 
     if ~exist('shouldPlot','var')

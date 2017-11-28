@@ -2,8 +2,12 @@
 %   Alex Kyriazis
 %   William Choi
 
-% Trains a convolutional neural network on images of false positive
-% and true positive cell classes. Requires a call to 'prepare_training.m'
+% Trains a neural network classifier on our labelled set (in data/formatted)
+% returns the unthresholded classification decisions on a validation set
+% (and the validation set labels) for further analysis.
+
+% Architecture of network based on digit classification example in matlab
+% docs.
 
 function [decisions,result_labels] = nn_train()
 

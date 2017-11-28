@@ -1,3 +1,11 @@
+% University of British Columbia, Vancouver, 2017
+%   Alex Kyriazis
+%   William Choi
+
+% Trains an adaboost classifier on our labelled set (in data/formatted)
+% returns the unthresholded classification decisions on a validation set
+% (and the validation set labels) for further analysis.
+
 function [decisions,result_labels] = ada_train()
 
     load('../data/formatted/meta.mat'); % to get training_dpids

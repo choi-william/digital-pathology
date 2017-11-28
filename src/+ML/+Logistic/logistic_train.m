@@ -1,3 +1,14 @@
+% University of British Columbia, Vancouver, 2017
+%   Alex Kyriazis
+%   William Choi
+
+% Trains an logistic regression ensemble classifier on our labelled set 
+% (in data/formatted) returns the unthresholded classification decisions 
+% on a validation set (and the validation set labels) for further analysis.
+
+% Note: an ensemble was used because it was found to be too computationally
+% expensive to train a single classifier on the whole data set
+
 function [decisions,result_labels] = logistic_train()
 
     load('../data/formatted/meta.mat'); % to get training_dpids

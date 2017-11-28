@@ -2,7 +2,8 @@
 %   Alex Kyriazis
 %   William Choi
 
-global dataPath;
+% Creates Union and Intersect data set based on our two independent data
+% sets
 
 intersect_data = [];
 union_data = [];

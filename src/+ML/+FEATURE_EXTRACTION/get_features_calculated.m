@@ -2,8 +2,9 @@
 %   Alex Kyriazis
 %   William Choi
 
-% Trains a convolutional neural network on images of false positive
-% and true positive cell classes. Requires a call to 'prepare_training.m'
+% Takes the contents of /data/formatted, which should contain the result of
+% a call to ML.prepare_training.m, and injects a set of manually extracted
+% features.
 
 run init.m
 

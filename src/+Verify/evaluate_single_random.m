@@ -1,3 +1,9 @@
+% University of British Columbia, Vancouver, 2017
+%   Alex Kyriazis
+%   William Choi
+
+% Runs evaluate_image_performance with a random image
+
 close all;
 found_dpids = [];
 files = dir('../data/test/');

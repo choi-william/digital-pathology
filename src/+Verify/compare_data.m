@@ -2,6 +2,9 @@
 %   Alex Kyriazis
 %   William Choi
 
+% Compares two datasets to determine number of
+%false positives, true positives and false negatives 
+
 function [GT,TP,FP,FN] = compare_data(dpids,label_data,prediction_data)  
 
     GT = 0;

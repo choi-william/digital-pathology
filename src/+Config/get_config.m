@@ -1,3 +1,11 @@
+% University of British Columbia, Vancouver, 2017
+%   Alex Kyriazis
+%   William Choi
+
+% Gets particular config value, specified by the value's key
+% This file also holds the default values that are loaded in upon running
+% init.m
+
 function [value] = get_config(param)
     global global_config;
 

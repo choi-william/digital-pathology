@@ -1,3 +1,10 @@
+% University of British Columbia, Vancouver, 2017
+%   Alex Kyriazis
+%   William Choi
+
+% Displays the labelled dataset superimposed on a random image in the set
+% Specifcy which data set in the first load line
+
 load('+Annotation/annotation_data_asma.mat');
 
 dpid = dpids(randi(length(dpids)));

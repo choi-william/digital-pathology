@@ -4,9 +4,12 @@
 
 % Saves false positive and true positive cell images in distinct folders
 
-% Takes a specificed training set of the annotated images, uses a very
-% sensitive version of our automated algorithm to compare against the annotated data set.
-% Uses this to generate classes of false positive and true positive cell identifications
+% Takes a specificed training set of the annotated images, uses our automated algorithm to 
+% compare against the annotated data set. Uses this to generate classes of false positive 
+% and true positive cell identifications
+
+% True positives are based on the data set specified in the load command
+% below. Change as required.
 
 out_path = uigetdir('../data/','Choose output folder');
 

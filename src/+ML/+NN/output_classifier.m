@@ -2,18 +2,19 @@
 %   Alex Kyriazis
 %   William Choi
 
-% Trains a convolutional neural network on images of false positive
-% and true positive cell classes. Requires a call to 'prepare_training.m'
+% Very similar to nn_train.m except that it doesn't compare against a
+% validation set and it outputs the classifier at the end for use in the
+% end-to-end process.
 
 function [] = output_classifier()
 
     run init.m
 
     %find data folder
-    out_path = '/Users/williamchoi/Desktop/CapstoneUne/dpv2/data/nn/';
+    out_path = '../data/nn/';
     
-    load('/Users/williamchoi/Desktop/CapstoneUne/dpv2/data/nn/meta.mat');
-
+    load('../data/nn/meta.mat');
+    
     %set categories
     categories = {'falsePositives', 'truePositives'};
     imds = imageDatastore(fullfile(out_path, categories), 'LabelSource', 'foldernames');

@@ -5,8 +5,7 @@
 % Evaluates one dataset against images in specified set_type
 % (train,test,validate). 
 
-% Usually specify 'algorithm' as prediction_set to predict with our
-% automatic process.
+% Usuall
 
 function [GT,TP,FP,FN] = evaluate_all(label_set, prediction_set,set_type)
 
