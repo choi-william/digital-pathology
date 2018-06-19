@@ -6,26 +6,26 @@
 % evaluate_all with varying neural network decision thresholds
 
 function [] = evaluate_PR(set_type)
-    X = linspace(0,1,20);
-    precisions = [];
-    recalls = [];
-    for i = 1:length(X);
-        thresh = X(i);
-        Config.set_config('DEEP_FILTER_THRESHOLD',thresh);
-        [GT,TP,FP,FN] = Verify.evaluate_all('union', 'algorithm', set_type);
-
-        P = TP/(TP+FP);
-        R = TP/(TP+FN);     
-
-        if isnan(P)
-            P = 1;
-        end
-        
-        precisions = [precisions; P];
-        recalls = [recalls; R];
-        fprintf('Done %d of %d of evaluate_PR',i,length(X));
-    end
-    save('+Verify/evaluate_PR_intermediate.mat','precisions','recalls');
+%     X = linspace(0,1,20);
+%     precisions = [];
+%     recalls = [];
+%     for i = 1:length(X);
+%         thresh = X(i);
+%         Config.set_config('DEEP_FILTER_THRESHOLD',thresh);
+%         [GT,TP,FP,FN] = Verify.evaluate_all('union', 'algorithm', set_type);
+% 
+%         P = TP/(TP+FP);
+%         R = TP/(TP+FN);     
+% 
+%         if isnan(P)
+%             P = 1;
+%         end
+%         
+%         precisions = [precisions; P];
+%         recalls = [recalls; R];
+%         fprintf('Done %d of %d of evaluate_PR',i,length(X));
+%     end
+%     save('+Verify/evaluate_PR_intermediate.mat','precisions','recalls');
     load('+Verify/evaluate_PR_intermediate.mat','precisions','recalls');
     
     plot(recalls,precisions,'LineWidth',4);
