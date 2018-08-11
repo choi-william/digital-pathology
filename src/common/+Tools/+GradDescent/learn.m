@@ -8,9 +8,7 @@
 % folder
 
 
-function [P_f, C ] = learn()
-
-    run init.m %reset parameters
+function [P_f, C ] = learn(label_set, prediction_set,set_type)
 
     %iterations is number of iterations
     %p_jump is the scale of the basic jump unit for each parameters
@@ -18,16 +16,8 @@ function [P_f, C ] = learn()
     %bounds are the min and max bounds of each parameters
     %step_length represents the maximum step traversal represented as a
     %   decimal percentage of bound size
-    
-%     global_config.LOWER_SIZE_BOUND = 30;
-%     global_config.MUMFORD_SHAH_LAMBDA = 0.05;
-%     global_config.DEEP_FILTER_THRESHOLD = 0.5;   
-
-%     Config.set_config('MIN_CLUMP_AREA',P(1));
-%     Config.set_config('CLUMP_MUMFORD_SHAH_LAMBDA',P(2));
-%     Config.set_config('CLUMP_THRESHOLD',P(3));
-    
-    P_o = [30.4143, 0.1591];% initialization param
+   
+    P_o = [10,0.05];% initialization param
     p_jump = [2,0.01];% smallest unit that each of the parameter jumps
     max = [100,0.5];% bounds
     min = [0,0]; % bound
@@ -45,7 +35,7 @@ function [P_f, C ] = learn()
     B = bounds(2,:) - bounds(1,:);
     
     for i=1:iterations
-       [the_cost,TP,FP,FN] = cost(P(i,:));
+       [the_cost,TP,FP,FN] = cost(P(i,:),label_set, prediction_set,set_type);
        C(i) = the_cost;
        fprintf('Score (i=%d): %f with (%d,%d,%d)\n',i,C(i),TP,FP,FN);
        P(i,:)
@@ -53,7 +43,7 @@ function [P_f, C ] = learn()
            b=zeros(1,size(p_jump,2));
            b(j) = 1;
            dP = b.*p_jump;
-           G(j) = (cost(P(i,:)+dP)-C(i))/(sum(dP));
+           G(j) = (cost(P(i,:)+dP,label_set, prediction_set,set_type)-C(i))/(sum(dP));
        end
        G = G.*B'; %to correct for gradient biasing
        G = G.*B'; %to correct for how parameters are adjusted

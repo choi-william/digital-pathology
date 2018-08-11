@@ -6,14 +6,19 @@
 % validation set and it outputs the classifier at the end for use in the
 % end-to-end process.
 
+%CHANGE THE 
+
 function [] = output_classifier()
 
     run init.m
 
     %find data folder
-    out_path = '../data/nn/';
+    out_path = strcat(uigetdir('../data/','Choose output folder'),'/');
+
+    [file,path] = uiputfile('*.mat','Save classifier as');
+
     
-    load('../data/nn/meta.mat');
+    load(strcat(out_path,'meta.mat'));
     
     %set categories
     categories = {'falsePositives', 'truePositives'};
@@ -28,7 +33,7 @@ function [] = output_classifier()
     countEachLabel(imds)
 
     layers = [
-        imageInputLayer([30 30 3])
+        imageInputLayer([30 30 1])
 
         convolution2dLayer(3,16,'Padding',1)
         batchNormalizationLayer
@@ -49,10 +54,10 @@ function [] = output_classifier()
         classificationLayer];
 
     options = trainingOptions('sgdm',...
-        'MaxEpochs',11, ... 
+        'MaxEpochs',9, ... 
         'InitialLearnRate',0.0001);
 
     classifier = trainNetwork(imds,layers,options);
     decision_threshold = 0.5;
-    save('+ML/deep_learning_model.mat','classifier','decision_threshold','training_dpids');
+    save(strcat(path,file),'classifier','decision_threshold','training_dpids');
 end

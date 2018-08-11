@@ -42,8 +42,10 @@ function [newim] = get_block(image,cent)
     end
     
     assert(all(size(newim)==[BOX_SIDE,BOX_SIDE,3]));
-%     newim = newim(:,:,3);
-      %newim = rgb2gray(newim);
+    newim = newim(:,:,3);
+    
+%     newim = rgb2gray(newim);
 %     newim = imadjust(newim,[0; double(prctile(newim(:),75))/255],[0; 1]);
+%     
 %     newim = Tools.normalize_image(newim);
 end

@@ -13,11 +13,13 @@ function [decisions,result_labels] = nn_train()
 
     run init.m
 
-    TRAINING_TESTING_SPLIT = 0.9;
+    TRAINING_TESTING_SPLIT = 0.7;
 
 
     %find data folder
-    out_path = '../data/formatted/';
+    out_path = uigetdir('../data/','Choose output folder');
+
+%     out_path = '../data/formatted/';
 
     %set categories
     categories = {'falsePositives', 'truePositives'};

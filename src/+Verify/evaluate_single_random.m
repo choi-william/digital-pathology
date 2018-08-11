@@ -6,7 +6,7 @@
 
 close all;
 found_dpids = [];
-files = dir('../data/test/');
+files = dir('../data/v3/');
 k= 1;
 while k <= length(files)
     if endsWith(files(k).name,'.tif')

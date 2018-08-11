@@ -67,7 +67,7 @@ load('+ML/assess_models_intermediate_4.mat','result');
 figure;
 hold on;
 title('Classification Model Comparison','FontSize',20);
-xlabel('Recall','FontSize',15);
+xlabel('Sensitivity','FontSize',15);
 ylabel('Precision','FontSize',15);
 ylim([0.5, 1]); 
 xlim([0, 1]);

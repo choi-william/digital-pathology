@@ -139,7 +139,7 @@ function bwIm = extract_processes( soma_image, options )
     else
         adjustedColorIm = imadjust(soma_image,[0; 0.6],[0; 1], 1.5);
         bwIm = imbinarize(rgb2gray(adjustedColorIm), 0.9);
-        bwIm = sizeFilter( bwIm, 10, 3000 );
+        bwIm = Helper.sizeFilter( bwIm, 10, 3000 );
         
         % Dilating the binary image to fill the gaps
         se1 = strel('rectangle', [1 2]);

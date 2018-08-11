@@ -21,23 +21,23 @@ function [GT,TP,FP,FN] = evaluate_all(label_set, prediction_set,set_type)
     end   
     
     training_dpids = [];
-    load('+ML/deep_learning_model.mat');
+    load('+ML/classifiers/deep_learning_model_v4.mat');
     
-    training_set_dpids = find_dpids('train');
-    testing_set_dpids = find_dpids('test');
+    training_set_dpids = find_dpids('train_v3');
+    testing_set_dpids = find_dpids('test_v3');
     
     %%%
     %GET LABEL DATA
     %%%%
     switch label_set
         case 'tom'
-            load('+Annotation/annotation_data_tom.mat');
+            load('+Annotation_cell/annotation_data_tom.mat');
         case 'asma'
-            load('+Annotation/annotation_data_asma.mat');
+            load('+Annotation_cell/annotation_data_asma.mat');
         case 'intersect'
-            load('+Annotation/annotation_data_intersect.mat');
+            load('+Annotation_cell/annotation_data_intersect.mat');
         case 'union'
-            load('+Annotation/annotation_data_union.mat');
+            load('+Annotation_cell/annotation_data_union.mat');
         case 'algorithm'
             %only training folder
             dpids = training_set_dpids;
@@ -67,13 +67,13 @@ function [GT,TP,FP,FN] = evaluate_all(label_set, prediction_set,set_type)
     %%%
     switch prediction_set
         case 'tom'
-            load('+Annotation/annotation_data_tom.mat');
+            load('+Annotation_cell/annotation_data_tom.mat');
         case 'asma'
-            load('+Annotation/annotation_data_asma.mat');
+            load('+Annotation_cell/annotation_data_asma.mat');
         case 'intersect'
-            load('+Annotation/annotation_data_intersect.mat');
+            load('+Annotation_cell/annotation_data_intersect.mat');
         case 'union'
-            load('+Annotation/annotation_data_union.mat');
+            load('+Annotation_cell/annotation_data_union.mat');
         case 'algorithm'
             %only training folder
             dpids = training_set_dpids;
@@ -144,6 +144,10 @@ function [GT,TP,FP,FN] = evaluate_all(label_set, prediction_set,set_type)
         prediction_data = prediction_data(ismember(prediction_data(:,1),common_dpids),:);
     end
     
+    fprintf('  on %d images\n',length(common_dpids));
+    
     [GT,TP,FP,FN] = Verify.compare_data(common_dpids,label_data,prediction_data);
-    %fprintf('Precision: %f, Recall: %f',TP/(TP+FP),TP/(TP+FN));
+    
+    fprintf('GT TP FP FN (%d,%d,%d,%d)\n',GT,TP,FP,FN);
+    fprintf('Precision: %f, Recall: %f',TP/(TP+FP),TP/(TP+FN));
 end

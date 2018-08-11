@@ -10,7 +10,6 @@ function [ flag, somas ] = resolve_clump( dpcell )
     flag = 0;
 
     Iobrcbr = dpcell.oImage;
-
     rgbIm = dpcell.subImage;
     
 
@@ -26,10 +25,16 @@ function [ flag, somas ] = resolve_clump( dpcell )
     for i=1:size(dpcell.pixelList,1)
         A = dpcell.pixelList(i,:);
         A = round(A-dpcell.TL)+[1,1]; %adjust for soma image
-        mask(round(A(2)),round(A(1))) = 1;                
+        
+        X = round(A(2));
+        Y = round(A(1));
+        
+        if X>0 && X<=size(adjusted,2) && Y>0 && Y<=size(adjusted,1)
+            mask(X,Y) = 1;  
+        end         
     end  
-   
-    out = ~((~out) .* mask);
+    c = out;
+    out = ~((~c) .* mask);
 
 
 

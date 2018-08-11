@@ -33,8 +33,8 @@ function [ output_args ] = visualize_slide( vis_type )
     minval = min(owm(:)); %find minimum intensity
 
     map = colormap; %get current colormap (usually this will be the default one)
-    a = floor((a-minval)./(maxval-minval)*length(map));
-    a_copy=ind2rgb(a, map);
+    a_copy = floor((a-minval)./(maxval-minval)*length(map));
+    a_copy=ind2rgb(a_copy, map);
 
     [xbg, ybg] = ind2sub(size(a_copy),bg);
     [xgm, ygm] = ind2sub(size(a_copy),gm);
@@ -47,14 +47,34 @@ function [ output_args ] = visualize_slide( vis_type )
     a_copy(xgm(indx),ygm(indx),:) = [0.5 95/255 101/255];
     end
 
-    image(a_copy,'Tag','slideImage');
-    colorbar;
+    if vis_type == 1
+        a=a/1.6123e+04*10^6/100 %/mm^2
+    end
+
+    ggg= image(a_copy,'Tag','slideImage');
+    hold on
+    b=surf(a);
+    alpha(b,0);
+    shading('interp');
+    
+    hc=colorbar;
+    
+    
+    if vis_type == 1
+        title(hc,{"100 per","mm^2"});
+    else
+        title(hc,"Percent Ramified");
+        %TODO, fix colour bar from 0 to 1
+    end
+    
     ax = gca;
     box on;
     set(ax,'xtick',[],'ytick',[]);
     ax.XColor = [1 1 1];
     ax.YColor = [1 1 1];
-
+    
+    print(gcf,'-depsc','heatmap.eps');
+    
     set (gcf, 'WindowButtonMotionFcn', @mouseMoveSimple);
 
     

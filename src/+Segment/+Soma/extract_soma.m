@@ -1,4 +1,4 @@
-% University of British Columbia, Vancouver, 2017
+  % University of British Columbia, Vancouver, 2017
 %   Alex Kyriazis
 %   William Choi
 % 
@@ -8,7 +8,11 @@
 % alg - algorithm type parameter. 0 for opening and closing by
 % reconstruction. 1 for mumford-shah, 2 for multithresholding (untested)
 %
-function [list,dp] = extract_soma( dpimage )
+function [list,dp] = extract_soma( dpimage, cell_classifier )
+
+    if(~exist('cell_classifier','var'))
+        cell_classifier = [];
+    end
     
     %%%%SEGMENTATION%%%%%
 
@@ -28,7 +32,10 @@ function [list,dp] = extract_soma( dpimage )
     values = round((tolerance/2):tolerance:255);
     mumfordIm = uint8(imquantize(mumfordIm,ths,values));
     
-    bwIm = ~imregionalmin(imadjust(mumfordIm,[0; Config.get_config('WHITE_DISCARD_THRESHOLD')],[0; 1]));
+    adjusted_im = imadjust(mumfordIm,[0; Config.get_config('WHITE_DISCARD_THRESHOLD')],[0; 1]);
+    
+    bwIm = ~imregionalmin(adjusted_im);
+    
     bw_small_pieces = ~bitxor(~bwareaopen(~bwIm,10),bwIm);
     mumfordIm(~bw_small_pieces) = 255;
     
@@ -46,11 +53,6 @@ function [list,dp] = extract_soma( dpimage )
     dpimage.somaMask = somaIm;
     comp = bwconncomp(imcomplement(somaIm));
 
-    if (Config.get_config('USE_DEEP_FILTER'))
-        file = load('+ML/deep_learning_model.mat'); 
-        classifier = file.classifier;
-        decision_threshold = file.decision_threshold;
-    end
     
     list = {};
     for i=1:comp.NumObjects
@@ -60,16 +62,19 @@ function [list,dp] = extract_soma( dpimage )
         % Loop through the cells since there could be multiple detected
         % from resolving clumpsg
         for j=1:size(prepared,2)
-            dpcell = prepared{j};            
+            dpcell = prepared{j}; 
+            
 
             if (Config.get_config('USE_DEEP_FILTER'))
-                if (~predict_valid(classifier,decision_threshold,dpcell))
-                    dpcell.isFalsePositive = 1;
-                end
+                [good,best] = predict_valid(cell_classifier,dpcell);
+                dpcell.isFalsePositive = ~good;
+                dpcell.isBestCell = best;
             end
             list{end+1} = dpcell;
+            
         end
     end    
     dp = dpimage;
-end
+%     Verify.display_segment(dp,list)
+   end
 

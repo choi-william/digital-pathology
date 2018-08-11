@@ -55,10 +55,12 @@ classdef DPImage
             end
             
             obj.id = id;
-            if ismember(id,Tools.find_dpids('train'))
-                filename = strcat('../data/train/',num2str(id),'.tif');
-            elseif ismember(id,Tools.find_dpids('test'))
-                filename = strcat('../data/test/',num2str(id),'.tif');
+%             if ismember(id,Tools.find_dpids('v2'))
+%                 filename = strcat('../data/v2/',num2str(id),'.tif');
+            if ismember(id,Tools.find_dpids('train_v3'))
+                filename = strcat('../data/train_v3/',num2str(id),'.tif');
+            elseif ismember(id,Tools.find_dpids('test_v3'))
+                filename = strcat('../data/test_v3/',num2str(id),'.tif');
                 fprintf('WARNING: PULLING FROM TEST SET\n');
             elseif startsWith(id,'s')
                 filename = strcat('../data/subImage_test/',id,'.tif');

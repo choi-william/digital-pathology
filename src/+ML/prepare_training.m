@@ -11,6 +11,11 @@
 % True positives are based on the data set specified in the load command
 % below. Change as required.
 
+%Change what data set is loaded (intersect, union, Asma, Tom ?)
+
+%Change the training_percentage. (if running on the final test set should
+%be 1.0, else if you want a validation set, then <1.0)
+
 out_path = uigetdir('../data/','Choose output folder');
 
 tp_class = 'truePositives';
@@ -25,14 +30,14 @@ meta_path = strcat(out_path,strcat('/','meta.mat'));
 
 data=[];
 dpids=[];
-load('+Annotation/annotation_data_union.mat');
+load('+Annotation_cell/annotation_data_intersect.mat'); %CHANGE
 
-found_dpids = Tools.find_dpids('train');
+found_dpids = Tools.find_dpids('train_v3');
 dpids = intersect(found_dpids,dpids);
 data = data(ismember(data(:,1),found_dpids),:);
 
 %create a training/testing split in dpids
-training_percentage = 1.0;
+training_percentage = 1.0; %CHANGE
 setlength = randperm(size(dpids,1));
 
 training_dpids = dpids(setlength(1:floor(size(setlength,2)*training_percentage)),:);
@@ -73,7 +78,6 @@ for i=1:size(training_dpids,1)
         newim = Tools.get_block(dpim.image,soma.centroid);
 
         image_array = Tools.rotate_image(newim);
-        
         for k=1:size(image_array,1)
             image_name = strcat(num2str(count),'.tif');
             count = count+1;
@@ -109,16 +113,24 @@ while k <= length(files_fp)
     k = k + 1;
 end       
 
-number_to_delete = size_fp - size_tp;
+number_to_delete = abs(size_fp - size_tp);
 
-rand_index = randperm(size(files_fp,1));
-mixed_files = files_fp(rand_index);
+
+if size_fp > size_tp
+    rand_index = randperm(size(files_fp,1));
+    mixed_files = files_fp(rand_index);
+    delete_path = path_fp;
+else
+    rand_index = randperm(size(files_tp,1));
+    mixed_files = files_tp(rand_index);
+    delete_path = path_tp;    
+end
 
 k= 1;
 l= 1;
 while l <= number_to_delete
     if endsWith(mixed_files(k).name,'.tif')
-        delete([path_fp,'/',mixed_files(k).name]);
+        delete([delete_path,'/',mixed_files(k).name]);
         l = l+1;
     end
     k = k + 1;

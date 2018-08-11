@@ -22,6 +22,8 @@ function [] = pathology_analysis(analysis_type, imagePath, outPath)
     % Determine the White Matter Regions
     DPslide = ROI.roi_finder(imagePath);
     
+    
+    
     sizeDPslide = size(DPslide,2);
     
     blockSize = 256; % size of each image subblock, change to 128 when new data is available
@@ -39,6 +41,12 @@ function [] = pathology_analysis(analysis_type, imagePath, outPath)
     outputData2 = -1*ones(numrows*numcols,1);
     
     status = zeros(numrows*numcols,1);
+    
+    mat1 = load(Config.get_config('CELL_CLASSIFIER_PATH'));
+    mat2 = load(Config.get_config('MORPHOLOGY_CLASSIFIER_PATH'));
+    
+    cell_classifier = mat1.classifier;
+    morphology_classifier = mat2.classifier;
 
     parpool;
 
@@ -77,9 +85,9 @@ function [] = pathology_analysis(analysis_type, imagePath, outPath)
             blue = im.image(:,:,3);
             im.avInt = mean(blue(:));
             
-            [cell_count, average_fractal] = Pipeline.block_analysis( im, analysis_type, 0 );
+            [cell_count, average_morphology] = Pipeline.block_analysis( im, analysis_type,cell_classifier,morphology_classifier);
             outputData1(linInd) = cell_count;
-            outputData2(linInd) = average_fractal;
+            outputData2(linInd) = average_morphology;
             
             fprintf('%d out of %d\n',status(linInd),total);
             fprintf('cell count: %d\n',cell_count);

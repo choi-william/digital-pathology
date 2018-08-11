@@ -20,7 +20,7 @@ function [GT,TP,FP,FN] = evaluate_image_performance(dpid,shouldPlot)
 
     data=[];
     dpids=[];
-    load('+Annotation/annotation_data_union.mat');
+    load('+Annotation_cell/annotation_data_union.mat');
 
     if (~any(dpids==dpid))
         error('cant evaluate an image that hasnt been annotated')

@@ -28,6 +28,7 @@ classdef DPCell
         isClump = 0;  % true if the component contains multiple cells
 
         isFalsePositive = 0; %classifier flag
+        isBestCell = 0;
         
         %file metadata
         centroid %centroid of pixels
@@ -52,6 +53,9 @@ classdef DPCell
         morphology
 
         somaSize
+        
+        %morphology
+        morphology_class
         
     end
     

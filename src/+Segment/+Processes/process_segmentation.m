@@ -11,6 +11,7 @@ function [ bwIm ] = process_segmentation( rgbCellImage, cellCentroid )
 %   PRE-CONDITIONS: cellCentroid is in the object of interest
 %                   cellCentroid is in x y format
 
+
     cellIm = imadjust(rgbCellImage(:,:,3));
     averageIntensity = sum(sum(cellIm))/(size(cellIm,1)*size(cellIm,2));
     cellIm = imadjust(cellIm,[0; averageIntensity/255],[0; 1]); % removing pixels above average intensity
@@ -24,6 +25,7 @@ function [ bwIm ] = process_segmentation( rgbCellImage, cellCentroid )
     quantIm = imquantize(cellIm, thresh);
     
     averageIntensity = sum(sum(cellIm))/(size(cellIm,1)*size(cellIm,2));
+%     averageIntensity = median(cellIm(:));
 
     % SOMA DETECTION
     minSomaSize = 50;
@@ -208,6 +210,7 @@ function [ bwIm ] = process_segmentation( rgbCellImage, cellCentroid )
             end
             croppedMask = crop_image(mask,currRow,currCol,offset);
             croppedSeed = crop_image(logical(seed),currRow,currCol,offset);
+            
             distTrans1 = graydist(croppedMask,croppedSeed,'quasi-euclidean');
             
             seedDist = distTrans1.*croppedSeeds; % no need to worry about inf as seeds are all in the mask area
@@ -255,7 +258,10 @@ function [ bwIm ] = process_segmentation( rgbCellImage, cellCentroid )
     A = newQuantIm > 0;
     B = newQuantIm <= somaLevel;
     somaIm = and(A,B);
-    finalTree =  or(finalTree, somaIm); 
+    
+    
+    temp = finalTree;
+    finalTree =  or(temp, somaIm); 
 
     % filling small holes
     filled = imfill(finalTree,'holes');
@@ -275,8 +281,31 @@ function [ bwIm ] = process_segmentation( rgbCellImage, cellCentroid )
 % % % % % % % 
 %     figure; 
 %     subplot(2,3,1), imshow(rgbCellImage), title('Original Image');
-%     subplot(2,3,2), imshow(label2rgb(quantIm)), title('Quantized Image');
+%     subplot(2,3,2), imshow(label2rgb(quantIm,'jet')), title('Quantized Image');
 %     subplot(2,3,3), imshow(label2rgb(newQuantIm)), title('Newly Quantized Image');
 %     subplot(2,3,4), imshow(seedIm), title('Seed Image');
 %     subplot(2,3,5), imshow(bwIm), title('Final Connected Tree');
+    
+%     close all;
+%     imshow(rgbCellImage)
+%     set(gcf,'renderer','Painters')
+%     print('-depsc','MicrogliaTracingE.eps');    
+%     
+%     close all;
+%     imshow(label2rgb(quantIm,'jet'))
+%     set(gcf,'renderer','Painters')
+%     print('-depsc','MicrogliaTracingF.eps');
+%     
+%     close all;
+%     imshow(seedIm)
+%     set(gcf,'renderer','Painters')
+%     print('-depsc','MicrogliaTracingG.eps');
+%     
+%     close all;
+%     imshow(bwIm)
+%     set(gcf,'renderer','Painters')
+%     print('-depsc','MicrogliaTracingH.eps');
+
+        
 end
+
