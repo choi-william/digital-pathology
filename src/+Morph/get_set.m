@@ -4,12 +4,10 @@
 % Randomly samples the largest set of cells that are uniform in morphology class.
 
 function new_set = get_set()
-    load('+Annotation_morph/annotation_morph_data.mat');
-    
-%     data(data(:,2)==2,:) = [];
-%     data(data(:,2)==3,:) = [];
-%     data(data(:,2)==2,2) = 1;
-%     data(data(:,2)==3,2) = 4;
+
+    [file,path] = uigetfile('+Annotation_morph/morphology_analysis_utility/labelling/*.mat','Open labelled data');
+
+    load(strcat(path,file));
 
     data(data(:,2)==0,:) = [];
     uv = unique(data(:,2)); %classes

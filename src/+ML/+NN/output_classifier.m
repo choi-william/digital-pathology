@@ -15,9 +15,8 @@ function [] = output_classifier()
     %find data folder
     out_path = strcat(uigetdir('../data/','Choose output folder'),'/');
 
-    [file,path] = uiputfile('*.mat','Save classifier as');
+    [file,path] = uiputfile('+ML/classifiers/*.mat','Save classifier as');
 
-    
     load(strcat(out_path,'meta.mat'));
     
     %set categories

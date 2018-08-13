@@ -5,7 +5,11 @@
 % Evaluates a previously annotated image to determine effectiveness
 % of segmentation algorithm.
 
-function [GT,TP,FP,FN] = evaluate_image_performance(dpid,shouldPlot)
+%Labeller name could be 'asma','tom', whatever name has been saved, or
+%possibly 'union' and 'intersect' if +Annotation_Cell/combine_data.mat has
+%been run
+
+function [GT,TP,FP,FN] = evaluate_image_performance(dpid,labeller_name,shouldPlot)
 
     if ~exist('shouldPlot','var')
         shouldPlot = 0;
@@ -13,14 +17,19 @@ function [GT,TP,FP,FN] = evaluate_image_performance(dpid,shouldPlot)
 
     dp = DPImage(dpid);
     if Tools.is_edge_image(dp)
-       fprintf('THIS IS PROBABLY A BAD ONE\n');
+       fprintf('Probably an edge slide\n');
     end
     
-    [found_soma,dp] = Segment.Soma.extract_soma(dp);
+    mat1 = load(Config.get_config('CELL_CLASSIFIER_PATH'));
+    cell_classifier = mat1.classifier;
+    
+    [found_soma,dp] = Segment.Soma.extract_soma(dp,cell_classifier);
 
     data=[];
     dpids=[];
-    load('+Annotation_cell/annotation_data_union.mat');
+    
+    GROUND_TRUTH_PATH = strcat('+Annotation_cell/cell_detection_analysis_utility/labelling/annotation_data_',labeller_name,'.mat');
+    load(GROUND_TRUTH_PATH);
 
     if (~any(dpids==dpid))
         error('cant evaluate an image that hasnt been annotated')

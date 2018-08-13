@@ -4,10 +4,11 @@
 % Takes a large set of cells and randomly samples N cells (saves them in
 % another folder)
 
+in_path = uigetdir('../data/','Choose input folder');
+out_path = uigetdir('+Annotation_morph/morphology_analysis_utility/','Choose output folder');
 
 N = 300;
-BASE = '+Annotation_morph/';
-files = dir([BASE,'images2']);
+files = dir(in_path);
 inds = [];
 n    = 0;
 k    = 1;
@@ -25,5 +26,5 @@ B = randperm(length(files));
 for i=1:N
     file = files(B(i));
     file_path = [file.folder,'/',file.name];
-    copyfile(file_path,[BASE,'sampled2/',file.name]);
+    copyfile(file_path,[out_path,'/',file.name]);
 end

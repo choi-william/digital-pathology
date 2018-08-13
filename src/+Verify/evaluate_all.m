@@ -2,14 +2,25 @@
 %   Alex Kyriazis
 %   William Choi
 
-% Evaluates one dataset against images in specified set_type
-% (train,test,validate). 
+% Evaluates one dataset against another in images from the class specified in set_type
 
-% Usually specify 'algorithm' as prediction_set to predict with our
-% automatic process.
+% label_set: the ground truth set (asma/tom/union/intersect)
+% prediction_set: set compared against ground truth (almost always 'algorithm')
 
-function [GT,TP,FP,FN] = evaluate_all(label_set, prediction_set,set_type)
+% set_type: the data being compared (train,test,validate). 
+    %train - the training data that the CNN trained on
+    %validate - the training data that the CNN DIDNT train on.
+    %test - the testing set
+    
+% verbose: (OPTIONAL), 0 if you want to suppress output, 1 otherwise
 
+%Typical use: evaluate_all('union', 'algorithm' ,'validate')
+
+function [GT,TP,FP,FN] = evaluate_all(label_set, prediction_set,set_type,verbose)
+
+    if ~exist('verbose','var')
+        verbose = 1;
+    end   
     if ~exist('set_type','var')
         set_type = 'validate';
     end   
@@ -31,13 +42,13 @@ function [GT,TP,FP,FN] = evaluate_all(label_set, prediction_set,set_type)
     %%%%
     switch label_set
         case 'tom'
-            load('+Annotation_cell/annotation_data_tom.mat');
+            load('+Annotation_cell/cell_detection_analysis_utility/labelling/annotation_data_tom.mat');
         case 'asma'
-            load('+Annotation_cell/annotation_data_asma.mat');
+            load('+Annotation_cell/cell_detection_analysis_utility/labelling/annotation_data_asma.mat');
         case 'intersect'
-            load('+Annotation_cell/annotation_data_intersect.mat');
+            load('+Annotation_cell/cell_detection_analysis_utility/labelling/annotation_data_intersect.mat');
         case 'union'
-            load('+Annotation_cell/annotation_data_union.mat');
+            load('+Annotation_cell/cell_detection_analysis_utility/labelling/annotation_data_union.mat');
         case 'algorithm'
             %only training folder
             dpids = training_set_dpids;
@@ -67,13 +78,13 @@ function [GT,TP,FP,FN] = evaluate_all(label_set, prediction_set,set_type)
     %%%
     switch prediction_set
         case 'tom'
-            load('+Annotation_cell/annotation_data_tom.mat');
+            load('+Annotation_cell/cell_detection_analysis_utility/labelling/annotation_data_tom.mat');
         case 'asma'
-            load('+Annotation_cell/annotation_data_asma.mat');
+            load('+Annotation_cell/cell_detection_analysis_utility/labelling/annotation_data_asma.mat');
         case 'intersect'
-            load('+Annotation_cell/annotation_data_intersect.mat');
+            load('+Annotation_cell/cell_detection_analysis_utility/labelling/annotation_data_intersect.mat');
         case 'union'
-            load('+Annotation_cell/annotation_data_union.mat');
+            load('+Annotation_cell/cell_detection_analysis_utility/labelling/annotation_data_union.mat');
         case 'algorithm'
             %only training folder
             dpids = training_set_dpids;
@@ -99,7 +110,6 @@ function [GT,TP,FP,FN] = evaluate_all(label_set, prediction_set,set_type)
     prediction_data = data;
     
     %discard testing set
-
     
     %now make sure we are only working on the validation set
  
@@ -144,10 +154,13 @@ function [GT,TP,FP,FN] = evaluate_all(label_set, prediction_set,set_type)
         prediction_data = prediction_data(ismember(prediction_data(:,1),common_dpids),:);
     end
     
-    fprintf('  on %d images\n',length(common_dpids));
     
     [GT,TP,FP,FN] = Verify.compare_data(common_dpids,label_data,prediction_data);
     
-    fprintf('GT TP FP FN (%d,%d,%d,%d)\n',GT,TP,FP,FN);
-    fprintf('Precision: %f, Recall: %f',TP/(TP+FP),TP/(TP+FN));
+    if (verbose)
+        fprintf('on %d images\n',length(common_dpids));
+        fprintf('GT TP FP FN (%d,%d,%d,%d)\n',GT,TP,FP,FN);
+        fprintf('Precision: %f, Recall: %f',TP/(TP+FP),TP/(TP+FN));        
+    end
+
 end

@@ -9,7 +9,7 @@ function [ good, best ] = predict_valid(classifier, cell)
 
 
     if isempty(classifier)
-        warning('USE_DEEP_FILTER is TRUE, but no classifier was found');
+        error('USE_DEEP_FILTER is TRUE, but no classifier was found');
         good = 1;
         return;
     end

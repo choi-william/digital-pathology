@@ -7,8 +7,12 @@
 % parameters and that you correctly set the cost function in the private
 % folder
 
+%Example: Tools.GradDescent.learn('union', 'asma', 'train')
+
 
 function [P_f, C ] = learn(label_set, prediction_set,set_type)
+
+    LEARNING_RATE = 0.05;
 
     %iterations is number of iterations
     %p_jump is the scale of the basic jump unit for each parameters
@@ -22,9 +26,9 @@ function [P_f, C ] = learn(label_set, prediction_set,set_type)
     max = [100,0.5];% bounds
     min = [0,0]; % bound
     bounds = [min; max;];
-    step_length = [0.05,0.05];
+    step_length = ones(length(P_o),1)*LEARNING_RATE; %SLOWLY LOWER THIS AFTER
     
-    iterations = 50;
+    iterations = 5;
 
     P = zeros(iterations,size(P_o,2));
     P(1,:) = P_o; %initial parameters
@@ -35,10 +39,18 @@ function [P_f, C ] = learn(label_set, prediction_set,set_type)
     B = bounds(2,:) - bounds(1,:);
     
     for i=1:iterations
-       [the_cost,TP,FP,FN] = cost(P(i,:),label_set, prediction_set,set_type);
+       [the_cost,parameter_labels,TP,FP,FN] = cost(P(i,:),label_set, prediction_set,set_type);
        C(i) = the_cost;
-       fprintf('Score (i=%d): %f with (%d,%d,%d)\n',i,C(i),TP,FP,FN);
-       P(i,:)
+       
+       fprintf('\n\nXXXXXXXXXX ITERATION:%d XXXXXXXXXX\n',i-1);
+       for k=1:length(P(i,:))
+            fprintf('%s: %f\n',parameter_labels{k},P(i,k));
+       end
+       fprintf('\n');
+       fprintf('Cost: %f\n',C(i));
+       fprintf('TP: %d, FP: %d, FN: %d',TP,FP,FN);
+       fprintf('\n\nXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n');
+       
        for j = 1:size(P_o,2) %calculate gradients
            b=zeros(1,size(p_jump,2));
            b(j) = 1;

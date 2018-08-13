@@ -3,8 +3,7 @@
 
 % Trains a classification model on all the data and outputs it.
 
-[file,path] = uiputfile('*.mat','Save classifier as');
-
+[file,path] = uiputfile('+Morph/classifiers/*.mat','Save classifier as');
 
 tic;
 [features,labels] = Morph.extract_data();

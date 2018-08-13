@@ -3,9 +3,9 @@
 
 % Runs microglia detection on the specified patches and outputs cell bodies
 
-out_path = '+Annotation_morph/images2/';
+out_path = uigetdir('../data/','Choose output folder');
 
-dpids = Tools.find_dpids('test_v3'); %CHANGE;
+dpids = Tools.find_dpids('test_v3');
 
 Config.set_config('DEEP_FILTER_THRESHOLD',0.1); %obtain a stricter set for morph analysis
 
@@ -24,11 +24,12 @@ for i=1:size(dpids,1)
         if (isSide == 0)
             image_name = strcat(num2str(count),'.tif');
             count = count+1;
-            imwrite(newim,strcat(out_path,image_name));
+            imwrite(newim,strcat(out_path,'/',image_name));
         end
     end
 end
 
+warning('this could generate a lot of images, consider deleting the generated folder after running sample_images.m');
 
 function [newim, isSide] = get_block_modified(image,cent)
 

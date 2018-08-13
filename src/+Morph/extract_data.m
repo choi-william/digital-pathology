@@ -15,7 +15,7 @@ function [features,labels] = extract_data()
 
         item = data(B(i),:);
 
-        image_name = ['+Annotation_morph/utility/images/', num2str(item(1)),'.tif'];
+        image_name = ['+Annotation_morph/morphology_analysis_utility/images/', num2str(item(1)),'.tif'];
         image = imread(image_name);
         centroid = mock_segment(image);
         

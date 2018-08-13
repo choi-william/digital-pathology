@@ -5,11 +5,11 @@
 % Compare Tom and Asma's data set to visually see what the biases are
 % with both 
 
-set1 = load('+Annotation/annotation_data_asma.mat');
+set1 = load('+Annotation/cell_detection_analysis_utility/labelling/annotation_data_asma.mat');
 data1=set1.data;
 dpids1=set1.dpids;
 
-set2 = load('+Annotation/annotation_data_tom.mat');
+set2 = load('+Annotation/cell_detection_analysis_utility/labelling/annotation_data_tom.mat');
 data2=set2.data;
 dpids2=set2.dpids;
 

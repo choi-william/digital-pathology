@@ -5,14 +5,17 @@
 % Creates Union and Intersect data set based on our two independent data
 % sets
 
+[file_name_1,path_name_1] = uigetfile('annotation file 1');
+[file_name_2,path_name_2] = uigetfile('annotation file 2');
+
 intersect_data = [];
 union_data = [];
 
-set1 = load('+Annotation_cell/annotation_data_asma.mat');
+set1 = load(strcat(path_name_1,file_name_1));
 data1=set1.data;
 dpids1=set1.dpids;
 
-set2 = load('+Annotation_cell/annotation_data_tom.mat');
+set2 = load(strcat(path_name_2,file_name_2));
 data2=set2.data;
 dpids2=set2.dpids;
 
@@ -76,12 +79,12 @@ union_data = [union_data; intersect_data];
 
 dpids = common_dpids;
 data = intersect_data;
-save('+Annotation_cell/annotation_data_intersect.mat','dpids','data');
+save('+Annotation_cell/cell_detection_analysis_utility/labelling/annotation_data_intersect.mat','dpids','data');
 size(data)
 
 dpids = common_dpids;
 data = union_data;
-save('+Annotation_cell/annotation_data_union.mat','dpids','data');
+save('+Annotation_cell/cell_detection_analysis_utility/labelling/annotation_data_union.mat','dpids','data');
 size(data)
 
 

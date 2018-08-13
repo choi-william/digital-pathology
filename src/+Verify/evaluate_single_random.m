@@ -4,6 +4,7 @@
 
 % Runs evaluate_image_performance with a random image
 
+labeller_name = inputdlg('Enter the labeller name you want to compare against (eg. asma,tom,union,intersect)');
 close all;
 found_dpids = [];
 files = dir('../data/v3/');
@@ -17,6 +18,6 @@ while k <= length(files)
     k = k + 1;
 end
 
-for i = 1:5
-    Verify.evaluate_image_performance(found_dpids(randi(length(found_dpids))),2);
+for i = 1:1 %can change to more if desired
+    Verify.evaluate_image_performance(found_dpids(randi(length(found_dpids))),labeller_name{1},2);
 end

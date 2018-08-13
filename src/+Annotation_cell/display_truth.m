@@ -11,7 +11,7 @@ function display_truth(name)
         name = 'asma';
     end   
     
-    path = strcat('+Annotation_cell/annotation_data_',name,'.mat')
+    path = strcat('+Annotation_cell/cell_detection_analysis_utility/labelling/annotation_data_',name,'.mat')
 
     load(path);
 

@@ -18,10 +18,10 @@ global PATH;
 PATH = ['images']; %CHANGE THIS
 
 data=[];
-if (~exist('annotation_morph_data.mat'))
-	save('annotation_morph_data.mat','data');      
+if (~exist('labelling/annotation_morph_data.mat'))
+	save('labelling/annotation_morph_data.mat','data');      
 end
-load('annotation_morph_data.mat','data');
+load('labelling/annotation_morph_data.mat','data');
 
 if isempty(data)
     used = [];
@@ -77,9 +77,9 @@ function clickKey (objectHandle , eventData )
     fprintf('Image id %d: %d\n',new_dpid,choice);
     
     data=[];
-    load('annotation_morph_data.mat');
+    load('labelling/annotation_morph_data.mat');
     data = [data; new_dpid, choice];
-    save('annotation_morph_data.mat','data');
+    save('labelling/annotation_morph_data.mat','data');
    
     close all;
     getNewImage();
