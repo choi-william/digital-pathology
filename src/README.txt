@@ -8,16 +8,46 @@ NOTE: This should not be used literally line-by-line, as further care needs to b
 WHITE MATTER SEGMENTATION DETECTION
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-TODO
+1. open the script "Run.m"
+
+2. change the variable "TRAIN_PATH" to the directory containing training slides
+   Note: if this is being performed out of the pipeline, the "TEST_PATH" and
+   "RESULTS_PATH" variables also need to be added accordingly
+
+3. change the variable "processSlides" to "true" if this is the first time training
+      (This should be set to false if the slides have already been processed and have
+       associated *.mat files)
+
+4. same steps as number 3 but now for the test slides
+
+5. Change the status of "isTesting", "isTrained", and "isInterfacing" variables accordingly
+    -isTrained---> Trains the classifier using the training data
+    -isTesting---> Uses the classifier to perform segmentation on testing data
+    -isInterfacing---> generates patch-wise output for microglia detection
+
+6. final step is to change the type of the image files in the scripts "RunTimeInfo.m",
+    "brain_slide_process.m", and "brain_slide_process_test.m" according to the type of
+    images that are being used (TIF vs SVS) for training and testing separately
+
+7. Run "Run.m" and white matter segmentation should begin
+
+Typical scenario is that the training slides have already been processed,
+therefore the above variables would normally be set as:
+
+processSlides = false;
+processTestSlides = true;
+isTesting = true;
+isTrained = false;
+isInterfacing = true;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 CELL DETECTION ANALYSIS TRAINING
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-1. run init.m 
+1. run init.m
 -resets the configuration parameters, and sets path info.
 
-2. Execute White Matter segmentation 
+2. Execute White Matter segmentation
 -result is a collection of folders for each slide
 
 3. Sample the White Matter patches to get a smaller collection
@@ -43,7 +73,7 @@ execute Tools.GradDescent.learn('intersect','algorithm','train');
 -Possibly need to rerun after finishing with a lower learning rate, to optimize even better.
 
 9. Insert the results of the gradient descent into the configuration file
--Go to Config.get_config, and fix the values of LOWER_SIZE_BOUND and MUMFORD_SHAH_LAMBDA 
+-Go to Config.get_config, and fix the values of LOWER_SIZE_BOUND and MUMFORD_SHAH_LAMBDA
 -run init.m  %to update the config values
 
 10. Make cell sets for CNN training
@@ -63,7 +93,7 @@ execute Verify.evaluate_single_random;
 14. Run a full set analysis:
 execute Verify.evaluate_all('union', 'algorithm', 'validate') %asma/tom/union/intersect/algorithm, train/test/validate
 
-15. Run and view full Precision-recall curve 
+15. Run and view full Precision-recall curve
 execute Verify.save_PR_results('test'); %test/train but probably you want 'test'
 execute Verify.view_PR_results; %prompts a dialogue to open the previous
 
@@ -78,7 +108,7 @@ execute Annotation_morph.sample_images %samples cells from the above generated c
 17. Put these sampled images into +Annotation_morph/morphology_annotation_utility/images
 
 18. Label cell data
-execute +Annotation_morph/morphology_annotation_utility/manual_label_new_image.m 
+execute +Annotation_morph/morphology_annotation_utility/manual_label_new_image.m
 -do until you are told you are finished
 
 19. Evaluate how good classification is with an SVM
@@ -101,20 +131,8 @@ RUNNING THE PIPELINE
 
 For a single slide:
 
-execute Pipeline.pathology_analysis(0); %0 for counting AND morphology, 1 for counting only 
+execute Pipeline.pathology_analysis(0); %0 for counting AND morphology, 1 for counting only
 
 For a batch of slides:
 
-execute Pipeline.batch_pathology_analysis(0) %0 for counting AND morphology, 1 for counting only 
-
-
-
-
-
-
-
-
-
-
-
-
+execute Pipeline.batch_pathology_analysis(0) %0 for counting AND morphology, 1 for counting only

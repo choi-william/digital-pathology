@@ -6,9 +6,9 @@
 
 clear; clc  %#ok<*UNRCH>
 
-global TRAIN_PATH TEST_PATH  RESULTS_PATH; 
+global TRAIN_PATH TEST_PATH  RESULTS_PATH;
 
-TRAIN_PATH   = '../data/slides/AlexBright256/';
+TRAIN_PATH   = '../data/slides/SlidesTrainDark/';
 
 
 if exist('RunTimeInfo.txt', 'file')
@@ -41,13 +41,13 @@ end
 isTesting = true;
 isTrained = false;
 if isTesting
-    
+
     %CREATE THE CLASSIFIER
     if ~isTrained
         brain_slide_train_test;
         isTrained = false; SaveResultsTesting;  %#ok<NASGU>
     end
-    
+
     %CLASSIFIES THE TEST DATA
     brain_slide_classify_test;
     isTrained = true; SaveResultsTesting;
@@ -65,7 +65,7 @@ end
 %make interface
 isInterfacing = true;
 if isInterfacing
-    
+
     %CREATES DIRECTORY STRUCTURE
     InterfaceOutput;
 end
