@@ -56,7 +56,7 @@ execute Tools.interface_output_sampler
 5. Label microglia positions by running the following until it says you are done:
 execute Annotation_cell.manual_label_new_image
 
-5b. Optionally perform a second labellin
+Optionally perform a second labellin
 -rename +Annotation_cell/cell_detection_analysis_utility/labelling/annotation_data.mat to annotation_data_[NAME].mat
 -execute Annotation_cell.combine_data
 
