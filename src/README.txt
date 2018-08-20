@@ -2,6 +2,8 @@ All questions about the below can be sent to adkyriazis@gmail.com
 
 This should act as a road map for how to train the automated pipeline.
 
+If you do not wish to train the pipeline, but simply to execute it, skip to the "RUNNING THE PIPELINE" section below.
+
 NOTE: This should not be used literally line-by-line, as further care needs to be taken. Please additionally read the documentation for each file being run.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
