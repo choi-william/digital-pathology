@@ -8,9 +8,7 @@ If you do not wish to train the pipeline, but simply to execute it, skip to the 
 
 NOTE: This should not be used literally line-by-line, as further care needs to be taken. Please additionally read the documentation for each file being run.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-WHITE MATTER SEGMENTATION DETECTION
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+## WHITE MATTER SEGMENTATION DETECTION
 
 1. open the script "Run.m"
 
@@ -18,9 +16,7 @@ WHITE MATTER SEGMENTATION DETECTION
    Note: if this is being performed out of the pipeline, the "TEST_PATH" and
    "RESULTS_PATH" variables also need to be added accordingly
 
-3. change the variable "processSlides" to "true" if this is the first time training
-      (This should be set to false if the slides have already been processed and have
-       associated *.mat files)
+3. change the variable "processSlides" to "true" if this is the first time training (This should be set to false if the slides have already been processed and have associated .mat files).
 
 4. same steps as number 3 but now for the test slides
 
@@ -44,9 +40,7 @@ isTesting = true;
 isTrained = false;
 isInterfacing = true;
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-CELL DETECTION ANALYSIS TRAINING
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+## CELL DETECTION ANALYSIS TRAINING
 
 1. run init.m
 -resets the configuration parameters, and sets path info.
@@ -101,9 +95,7 @@ execute Verify.evaluate_all('union', 'algorithm', 'validate') %asma/tom/union/in
 execute Verify.save_PR_results('test'); %test/train but probably you want 'test'
 execute Verify.view_PR_results; %prompts a dialogue to open the previous
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-MORPHOLOGY ANALYSIS TRAINING
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+## MORPHOLOGY ANALYSIS TRAINING
 
 16. Get cell set for training data
 execute Annotation_morph.output_cells %saves a collection of cells
@@ -129,9 +121,7 @@ execute Morph.train_classifer %save it at some location
 -run init.m  %to update the config values
 
 
-%%%%%%%%%%%%%%%%%%%%
-RUNNING THE PIPELINE
-%%%%%%%%%%%%%%%%%%%%
+## RUNNING THE PIPELINE
 
 For a single slide:
 
@@ -142,9 +132,7 @@ For a batch of slides:
 execute Pipeline.batch_pathology_analysis(0) %0 for counting AND morphology, 1 for counting only
 
 
-%%%%%%%%%%%%%%%
-DEVELOPER NOTES
-%%%%%%%%%%%%%%%
+## DEVELOPER NOTES
 
 There are lots of files in the src/ that are not necessary for running the project, but are for behind the scenes file manipulation, classification training, etc. 
 
