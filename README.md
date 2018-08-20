@@ -56,9 +56,9 @@ execute Tools.interface_output_sampler
 5. Label microglia positions by running the following until it says you are done:
 execute Annotation_cell.manual_label_new_image
 
-Optionally perform a second labellin
--rename +Annotation_cell/cell_detection_analysis_utility/labelling/annotation_data.mat to annotation_data_[NAME].mat
--execute Annotation_cell.combine_data
+    Optionally perform a second labellin
+    -rename +Annotation_cell/cell_detection_analysis_utility/labelling/annotation_data.mat to annotation_data_[NAME].mat
+    -execute Annotation_cell.combine_data
 
 6. Check if annotation worked properly
 execute Annotation_cell.display_truth('tom'); or asma/tom/union/intersect
