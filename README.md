@@ -123,14 +123,16 @@ execute Morph.train_classifer %save it at some location
 
 ## RUNNING THE PIPELINE
 
-For a single slide:
+Create an analysis file.
+src/main.m 
 
-execute Pipeline.pathology_analysis(0); %0 for counting AND morphology, 1 for counting only
+## VISUALIZING AN ANALYSIS FILE
 
-For a batch of slides:
+Visualize an analysis file
+src/GUI/main.m
 
-execute Pipeline.batch_pathology_analysis(0) %0 for counting AND morphology, 1 for counting only
-
+load the analysis file on prompt.
+Click either cell count or cell morphology.
 
 ## DEVELOPER NOTES
 

@@ -7,6 +7,9 @@ clear;
 global global_config;
 global_config = [];
 
+RANDOM_SEED = 23;
+rng(RANDOM_SEED);
+
 addpath(genpath('library'));
 addpath common;
 addpath ../src;

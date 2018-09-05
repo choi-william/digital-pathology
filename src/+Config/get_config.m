@@ -28,6 +28,8 @@ function [value] = get_config(param)
         global_config.DEEP_FILTER_THRESHOLD = 0.7;   
         global_config.MORPH_DECISION_THRESHOLD = 0.6;
         
+        global_config.STRICT_CELL_CONDITION = 0.9;
+        
         global_config.CELL_CLASSIFIER_PATH = '+ML/classifiers/deep_learning_model_v4.mat';   
         global_config.MORPHOLOGY_CLASSIFIER_PATH = '+Morph/classifiers/morph_classifier_v1.mat';   
         

@@ -24,7 +24,7 @@ function [ good, best ] = predict_valid(classifier, cell)
         elseif Yclass(i) ==0
             good = 1;
             best = 0;
-            if score(:,1) < 0.1
+            if score(:,1) < Config.get_config('STRICT_CELL_CONDITION')
                 best = 1;
             end
         end
