@@ -5,7 +5,7 @@
 % Evaluates a previously annotated image to determine effectiveness
 % of segmentation algorithm.
 
-%Labeller name could be 'asma','tom', whatever name has been saved, or
+%Labeller name could be 'labeller1','labeller2', whatever name has been saved, or
 %possibly 'union' and 'intersect' if +Annotation_Cell/combine_data.mat has
 %been run
 
@@ -64,7 +64,7 @@ function [GT,TP,FP,FN] = evaluate_image_performance(dpid,labeller_name,shouldPlo
                continue;
             end
             soma = found_soma{j};
-            d = Helper.CalcDistance(true_point,soma.centroid);
+            d = Tools.calc_distance(true_point,soma.centroid);
 
             if soma.isFalsePositive == 1
                 continue;
@@ -77,7 +77,7 @@ function [GT,TP,FP,FN] = evaluate_image_performance(dpid,labeller_name,shouldPlo
             end
             
 %             if (d < soma.maxRadius)
-%                 inside_mask = pixelListBinarySearch(round(soma.pixelList),round(true_point));
+%                 inside_mask = Tools.pixel_list_binary_search(round(soma.pixelList),round(true_point));
 %                 if (d < 15 || (inside_mask && d<30))
 %                    fp(j) = 0;
 %                    fn(i) = 0;

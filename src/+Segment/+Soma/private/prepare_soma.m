@@ -14,7 +14,7 @@ function [dpsomas ] = prepare_soma( dpsoma )
         MIN_CLUMP_AREA = Config.get_config('MIN_CLUMP_AREA');
         MAX_CLUMP_AREA = Config.get_config('MAX_CLUMP_AREA');
 
-        dpsoma = soma_bound_box(dpsoma,0); %adds box properties to the soma       
+        dpsoma = soma_bound_box(dpsoma); %adds box properties to the soma       
         
         dpsoma.cnnBox = Tools.get_block(dpsoma.referenceDPImage.image,round(dpsoma.centroid));
         if (dpsoma.area > MAX_CLUMP_AREA)

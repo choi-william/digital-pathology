@@ -8,7 +8,7 @@
 function [cell_count, average_morphology] = block_analysis( dpimage, analysis_type,cell_classifier,morph_classifier)
 %PATHOLOGY_ANALYSIS Summary of this function goes here
 %   analysis_type = 0 cell count & cell morphology
-%   analysis_type = 1 cell count
+%   analysis_type = 1 cell count only
 
     if(~exist('cell_classifier','var'))
         cell_classifier = [];
@@ -28,7 +28,6 @@ function [cell_count, average_morphology] = block_analysis( dpimage, analysis_ty
     
     if (analysis_type == 0)
         
-        % Any visualization stuff goes here
         morphologies = zeros(cell_count,1);
 
         for i =1:cell_count

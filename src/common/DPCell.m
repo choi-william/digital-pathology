@@ -21,14 +21,12 @@ classdef DPCell
         
         cnnBox %box around cell created for CNN
 
-        area %are of cell
-        preThreshIntensity %intensity at the centroid of the cell before thresholding
-        circularity %circularity of cell (currently unimplemented)
+        area %area of cell
 
         isClump = 0;  % true if the component contains multiple cells
 
         isFalsePositive = 0; %classifier flag
-        isBestCell = 0;
+        isBestCell = 0; % TODO descript
         
         %file metadata
         centroid %centroid of pixels
@@ -39,20 +37,14 @@ classdef DPCell
         % Following Processes Segmentation
         
         binaryIm     % binary image of the cell
-
         skelIm     % skeletonized image of the cell
 
         % Skeleton Analysis
         numJunctions   % number of junctions in a skeletonized image
-
         numEndpoints    % number of endpoints in a skeletonized image
 
         % Fractal Analysis
         fractalDim
-
-        morphology
-
-        somaSize
         
         %morphology
         morphology_class
@@ -72,8 +64,6 @@ classdef DPCell
             for i=1:size(L,1)
                 mask(round(L(i,2)),round(L(i,1))) = 1;                
             end
-
-            obj.circularity = 0; %want to remove but not sure
             
             % SOMA CENTER CALCULATION
             for i=1:5
@@ -108,13 +98,11 @@ classdef DPCell
             else
                 obj.centroid = round([sumX,sumY]/(count_intensities));
             end
-            
-            obj.preThreshIntensity = RDPI.preThresh(obj.centroid(2),obj.centroid(1));
-            
+                        
             obj.maxRadius = 0;
             for j=1:size(obj.pixelList,1)
                 p = obj.pixelList(j,:);
-                r = Helper.CalcDistance(obj.centroid,p);
+                r = Tools.calc_distance(obj.centroid,p);
                 if (r > obj.maxRadius)
                     obj.maxRadius = r;
                 end

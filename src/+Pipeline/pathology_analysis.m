@@ -22,8 +22,6 @@ function [] = pathology_analysis(analysis_type, imagePath, outPath)
     % Determine the White Matter Regions
     DPslide = ROI.roi_finder(imagePath);
     
-    
-    
     sizeDPslide = size(DPslide,2);
     
     blockSize = 256; % size of each image subblock, change to 128 when new data is available

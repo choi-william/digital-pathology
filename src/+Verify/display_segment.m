@@ -1,7 +1,16 @@
+% University of British Columbia, Vancouver, 2017
+%   Alex Kyriazis
+%   William Choi
+
+% Visualizes a segmentation in stages.
+
+% Accepts 'dp' which is a DPImage, and 'cells' which is a list of segmented
+% cells.
+
 function [] = display_segment(dp,cells)
 
     if Tools.is_edge_image(dp)
-       fprintf('THIS IS PROBABLY A BAD ONE\n');
+       fprintf('edge image\n');
     end
     
     found_soma = cells;

@@ -6,9 +6,8 @@
 % bounding box around the cell based on its size.
 %
 
-function [soma] = soma_bound_box( soma, basicOrAdvanced )
+function [soma] = soma_bound_box( soma )
 
-    %0 is basic, 1 is advanced
     bigImage = soma.referenceDPImage.image;
     ocbrcImage = soma.referenceDPImage.preThresh;
        

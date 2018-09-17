@@ -1,6 +1,6 @@
 % University of British Columbia, Vancouver, 2017
-%   Alex Kyriazis
 %   William Choi
+%   Alex Kyriazis
 % 
 % The main entry point into process (cell branch) segmentation. Uses
 % multithresholding techniques
@@ -93,7 +93,7 @@ function [ bwIm ] = process_segmentation( rgbCellImage, cellCentroid )
     for i=1:comp.NumObjects
         [row,col] = ind2sub(comp.ImageSize,comp.PixelIdxList{i}); 
         
-        good = pixelListBinarySearch([col,row],round(cellCentroid));
+        good = Tools.pixel_list_binary_search([col,row],round(cellCentroid));
         if(good == 1)
             tempIm = ones(size(newQuantIm));
             tempIm(comp.PixelIdxList{i}) = 0;
@@ -110,7 +110,7 @@ function [ bwIm ] = process_segmentation( rgbCellImage, cellCentroid )
 %         centroidList = cat(1,stat.Centroid);
 %         distList = zeros(1,size(centroidList,1));
 %         for i=1:size(centroidList,1)
-%             distList(i) = Helper.CalcDistance(centroidList(i,:),centroid);
+%             distList(i) = Tools.calc_distance(centroidList(i,:),centroid);
 %         end
 %         minDist = find(distList == min(distList),1);
 %         tempIm = ones(size(newQuantIm));

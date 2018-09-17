@@ -1,5 +1,6 @@
 % University of British Columbia, Vancouver, 2017
 %   Alex Kyriazis
+%   William Choi
 
 % Extracts cell features given its RGB image and a centroid
 
@@ -8,7 +9,7 @@ function [features] = get_cell_data(image,centroid)
 
     bwim = Segment.Processes.process_segmentation(image,centroid);
 
-    %only take biggest component - TODO incorporate into main pipeline
+    %only take biggest component
     comp = bwconncomp(imcomplement(bwim));
     numOfPixels = cellfun(@numel,comp.PixelIdxList);
     [unused,indexOfMax] = max(numOfPixels);

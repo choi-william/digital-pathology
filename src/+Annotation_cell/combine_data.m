@@ -45,7 +45,7 @@ for i=1:size(common_dpids,1)
                 continue
             end
 
-            d = Helper.CalcDistance(point1,point2);
+            d = Tools.calc_distance(point1,point2);
             if (d < 15)
                unique_to_1(k) = 0;
                unique_to_2(j) = 0;

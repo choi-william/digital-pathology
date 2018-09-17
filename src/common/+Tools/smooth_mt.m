@@ -1,3 +1,8 @@
+% University of British Columbia, Vancouver, 2018
+%   Alex Kyriazis
+
+% Multithresholding helper function.
+
 function [ out ] = smooth_mt( image, N)
 %SMOOTH_MT Summary of this function goes here
 %   Detailed explanation goes here

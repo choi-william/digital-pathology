@@ -7,7 +7,7 @@
 % parameters and that you correctly set the cost function in the private
 % folder
 
-%Example: Tools.GradDescent.learn('union', 'asma', 'train')
+%Example: Tools.GradDescent.learn('union', 'labeller1', 'train')
 
 
 function [P_f, C ] = learn(label_set, prediction_set,set_type)

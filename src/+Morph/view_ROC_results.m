@@ -3,7 +3,6 @@
 
 % Views cross validation results on binary morphology classification
 
-
 [file,path] = uigetfile('+Morph/results/*.mat','Open result to view');
 
 load([path,file],'A1','A2');

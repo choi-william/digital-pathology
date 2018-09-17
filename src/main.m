@@ -2,18 +2,17 @@
 %   Alex Kyriazis
 %   William Choi
 
-% To start analysis just run this file and select the options that best fit
-% the task.
+% To start analysis just run this file and select the desired options.
 % 
 % Once you've selected the options, it will prompt for a slide or a folder 
-% to analyze, select it.
+% of slides to analyze.
 %
-% Next, it will prompt for the location to save the output file(s) and in 
-% the case of single slide analysis, the output file name.
+% Next, it will prompt for the location to save the post-analysis output
+% file(s) and in the case of single slide analysis, the output file name.
 %
 % Once the program is done running, you will notice that the output file(s)'s
 % been created. If you want to visualize the results, run GUI/main.m and
-% choose the output file when prompted.  
+% choose the analysis output file when prompted.  
 
 run('init.m');
 
@@ -38,5 +37,5 @@ if process_type==1
     Pipeline.pathology_analysis(analysis_type)
 else
   %select folder for batch analysis
-    batch_pathology_analysis(analysis_type)
+    Pipeline.batch_pathology_analysis(analysis_type)
 end

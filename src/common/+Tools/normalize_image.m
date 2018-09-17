@@ -1,3 +1,9 @@
+% University of British Columbia, Vancouver, 2017
+%   Alex Kyriazis
+%   William Choi
+
+% Helper function to normalize the intensity distribution of an image.
+
 function [im_out] = normalize_image(im_in)        
     gray = rgb2gray(im_in);
     mid = 255/2;

@@ -4,7 +4,7 @@
 
 % Runs evaluate_image_performance with a random image
 
-labeller_name = inputdlg('Enter the labeller name you want to compare against (eg. asma,tom,union,intersect)');
+labeller_name = inputdlg('Enter the labeller name you want to compare against (eg. labeller1,labeller2,union,intersect)');
 close all;
 found_dpids = [];
 files = dir('../data/v3/');

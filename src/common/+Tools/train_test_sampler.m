@@ -1,12 +1,12 @@
 % University of British Columbia, Vancouver, 2018
 %   Alex Kyriazis
 
-% Samples a group of WM patches and puts them into train and test folders
+% Samples a group of white matter patches and puts them into train and test folders
 
 %PLEASE TAKE CARE IN SETTING THE NEXT 2 PARAMETERS
 
 SAMPLE_SIZE = 10; %samples PER brain slide
-SPLIT = 3; %X, where 1/X becomes the test set and (X-1)/X becomes the training set. This should a factor of the number of WM patches are sampled
+SPLIT = 3; %X, where 1/X becomes the test set and (X-1)/X becomes the training set. This should a factor of the number of white matter patches are sampled
 
 filePath = uigetdir('','Choose the folder');
 

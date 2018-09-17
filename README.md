@@ -1,12 +1,21 @@
 # README #
 
-All questions about the below can be sent to adkyriazis@gmail.com
+#Microglia Analysis tool V1.0#
 
-This should act as a road map for how to train the automated pipeline.
+This README should act as a road map for how to train the automated pipeline.
 
 If you do not wish to train the pipeline, but simply to execute it, skip to the "RUNNING THE PIPELINE" section below.
 
 NOTE: This should not be used literally line-by-line, as further care needs to be taken. Please additionally read the documentation for each file being run.
+
+## Execution Environment + Dependencies ##
+
+Requires at least MATLAB R2017b
+
+Also requires the following addons within MATLAB:
+-"Statistics and Machine Learning Toolbox"
+-"Neural Network Toolbox"
+-"Image Processing Toolbox" 
 
 ## WHITE MATTER SEGMENTATION DETECTION
 
@@ -61,7 +70,7 @@ execute Annotation_cell.manual_label_new_image
     -execute Annotation_cell.combine_data
 
 6. Check if annotation worked properly
-execute Annotation_cell.display_truth('tom'); or asma/tom/union/intersect
+execute Annotation_cell.display_truth('tom'); or labeller1/labeller2/union/intersect
 
 7. Split WM patches into train / test
 execute Tools.train_test_sampler; %be careful to change the parameters in the file
@@ -75,7 +84,7 @@ execute Tools.GradDescent.learn('intersect','algorithm','train');
 -run init.m  %to update the config values
 
 10. Make cell sets for CNN training
-execute ML.prepare_training('union', 1.0); %union/asma/tom/intersect
+execute ML.prepare_training('union', 1.0); %union/labeller1/labeller2/intersect
 -do less than 1.0 if you want to report results on a validation set
 
 11. Make classification model. Open the location saved in (11)
@@ -89,7 +98,7 @@ execute ML.NN.output_classifier;
 execute Verify.evaluate_single_random;
 
 14. Run a full set analysis:
-execute Verify.evaluate_all('union', 'algorithm', 'validate') %asma/tom/union/intersect/algorithm, train/test/validate
+execute Verify.evaluate_all('union', 'algorithm', 'validate') %labeller1/labeller2/union/intersect/algorithm, train/test/validate
 
 15. Run and view full Precision-recall curve
 execute Verify.save_PR_results('test'); %test/train but probably you want 'test'
@@ -136,11 +145,8 @@ Click either cell count or cell morphology.
 
 ## DEVELOPER NOTES
 
-There are lots of files in the src/ that are not necessary for running the project, but are for behind the scenes file manipulation, classification training, etc. 
-
+There are lots of files in the src/ that are not necessary for running the project, but could be useful.
 The project is organized into several modules
-
-+Analysis - for morphology feature extraction
 
 +Annotation_cell - utility for annotating and holding cell detection ground truth data.
 

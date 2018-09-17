@@ -2,7 +2,7 @@
 %   Alex Kyriazis
 %   William Choi
 
-% The cost function by which the gradient descent operates
+% The cost function the gradient descent optimizes
 
 function [cost,parameter_labels,TP,FP,FN] = cost(P,label_set, prediction_set,set_type)
 

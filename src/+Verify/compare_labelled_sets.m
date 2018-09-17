@@ -2,14 +2,14 @@
 %   Alex Kyriazis
 %   William Choi
 
-% Compare Tom and Asma's data set to visually see what the biases are
+% Compare Labeller1 and Labeller2's data set to visually see what the biases are
 % with both 
 
-set1 = load('+Annotation/cell_detection_analysis_utility/labelling/annotation_data_asma.mat');
+set1 = load('+Annotation/cell_detection_analysis_utility/labelling/annotation_data_labeller1.mat');
 data1=set1.data;
 dpids1=set1.dpids;
 
-set2 = load('+Annotation/cell_detection_analysis_utility/labelling/annotation_data_tom.mat');
+set2 = load('+Annotation/cell_detection_analysis_utility/labelling/annotation_data_labeller2.mat');
 data2=set2.data;
 dpids2=set2.dpids;
 
@@ -37,7 +37,7 @@ for l=1:5
             end
             point2 = round(dpid_data2(j,:));     
 
-            d = Helper.CalcDistance(point1,point2);
+            d = Tools.calc_distance(point1,point2);
             if (d < 15)
                unique_to_1(i) = 0;
                unique_to_2(j) = 0;
@@ -109,7 +109,7 @@ for l=1:5
     h(2) = plot(NaN,NaN,'.b','MarkerSize',20);
     h(3) = plot(NaN,NaN,'.','color',[1 0 1],'MarkerSize',20);
 
-    legend(h, 'Unique to Asma','Unique to Tom','Match','Location','southeast');
+    legend(h, 'Unique to Labeller1','Unique to Labeller2','Match','Location','southeast');
 
 end
 

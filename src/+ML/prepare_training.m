@@ -4,7 +4,7 @@
 
 % Saves false positive and true positive cell images in distinct folders
 
-% Takes a specificed training set of the annotated images, uses our automated algorithm to 
+% Takes a specificed training set of the annotated images, uses automated algorithm to 
 % compare against the annotated data set. Uses this to generate classes of false positive 
 % and true positive cell identifications
 
@@ -61,7 +61,7 @@ function [] = prepare_training(label_set, training_percentage)
             true_point = round(ground_truth(i,:));
             for j=1:size(found_soma,2) 
                 soma = found_soma{j};      
-                d = Helper.CalcDistance(true_point,soma.centroid);
+                d = Tools.calc_distance(true_point,soma.centroid);
                 if (d < soma.maxRadius)
                     inside_mask = pixelListBinarySearch(round(soma.pixelList),round(true_point));
                     if (d < 15 || inside_mask)

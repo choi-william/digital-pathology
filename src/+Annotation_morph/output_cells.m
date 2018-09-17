@@ -34,17 +34,16 @@ warning('this could generate a lot of images, consider deleting the generated fo
 function [newim, isSide] = get_block_modified(image,cent)
 
     isSide = 0;
-
-    %TODO read this from config file
-    BOX_SIDE = 40;
+    
+    box_side = Config.get_config('MORPHOLOGY_ANALYSIS_BOX_SIZE');
 
     W = size(image,2);
     H = size(image,1);
 
-    L = cent(1) - BOX_SIDE/2+1;
-    R = cent(1) + BOX_SIDE/2;
-    T = cent(2) - BOX_SIDE/2+1;
-    B = cent(2) + BOX_SIDE/2;
+    L = cent(1) - box_side/2+1;
+    R = cent(1) + box_side/2;
+    T = cent(2) - box_side/2+1;
+    B = cent(2) + box_side/2;
 
     L_adj = L+max(0,-L+1);
     R_adj = R-max(0,R-W);

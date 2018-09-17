@@ -5,9 +5,7 @@
 % The main acting algorithm that actually segments the cell bodies.
 %
 % dpimage - image object
-% alg - algorithm type parameter. 0 for opening and closing by
-% reconstruction. 1 for mumford-shah, 2 for multithresholding (untested)
-%
+% cell_classifier - classifier object
 function [list,dp] = extract_soma( dpimage, cell_classifier )
 
     if(~exist('cell_classifier','var'))
@@ -46,7 +44,7 @@ function [list,dp] = extract_soma( dpimage, cell_classifier )
     dpimage.rawThresh = bwIm;
 
     % Filtering by object size
-    somaIm = Helper.sizeFilter(bwIm,Config.get_config('LOWER_SIZE_BOUND'), 10000000);
+    somaIm = Tools.size_filter(bwIm,Config.get_config('LOWER_SIZE_BOUND'), 10000000);
 
     %%%%%%
     

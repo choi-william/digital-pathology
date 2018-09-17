@@ -8,7 +8,7 @@
 function display_truth(name)
 
     if ~exist('name','var')
-        name = 'asma';
+        name = 'labeller1';
     end   
     
     path = strcat('+Annotation_cell/cell_detection_analysis_utility/labelling/annotation_data_',name,'.mat')

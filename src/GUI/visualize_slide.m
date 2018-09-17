@@ -1,21 +1,14 @@
 % University of British Columbia, Vancouver, 2017
-%   Alex Kyriazis
 %   William Choi
+%   Alex Kyriazis
 
-%visualize_slide - visualizes data
+%visualize_slide - helper function for GUI/main.m to display data. 
 
 function [ output_args ] = visualize_slide( vis_type )
-%VISUALIZE_CELLCOUNT Summary of this function goes here
-%   vis_type = 1 cell count
-%   vis_type = 2 cell morphology
 
-%     global out_path;
-%     if (isempty(out_path))
-%         out_path = uigetdir('','Input data');
-%     end
-%     vis_path = strcat(out_path, '/analysis.mat');
-%     load(vis_path,'outputData1','outputData2','im','blockSize', 'DPslide'); %hardcoded right now
-%     
+    %   vis_type = 1 cell count
+    %   vis_type = 2 cell morphology
+
     global outputData1; global outputData2; global im; global blockSize; global DPslide;
     
     if vis_type == 1
@@ -41,14 +34,22 @@ function [ output_args ] = visualize_slide( vis_type )
 
 
     for indx = 1:length(xbg)
-    a_copy(xbg(indx),ybg(indx),:) = [1 1 1];
+        a_copy(xbg(indx),ybg(indx),:) = [1 1 1];
     end
     for indx = 1:length(xgm)
-    a_copy(xgm(indx),ygm(indx),:) = [0.5 95/255 101/255];
+        a_copy(xgm(indx),ygm(indx),:) = [0.5 95/255 101/255]; %colour scheme choice
     end
 
     if vis_type == 1
-        a=a/1.6123e+04*10^6/100 %/mm^2
+        
+        UM_PER_PIXEL = 0.496; %microns
+        BLOCK_PIXEL_LENGTH = 256; %pixels 
+        BLOCK_AREA_UM_SQ = (BLOCK_PIXEL_LENGTH*UM_PER_PIXEL)^2; %microns squared
+        UM_SQ_PER_MM_SQ = 10^6;
+        
+        SCALING_FACTOR = 100;
+       
+        a=a/BLOCK_AREA_UM_SQ*UM_SQ_PER_MM_SQ/SCALING_FACTOR; %100s per mm^2
     end
 
     ggg= image(a_copy,'Tag','slideImage');
@@ -72,9 +73,7 @@ function [ output_args ] = visualize_slide( vis_type )
     set(ax,'xtick',[],'ytick',[]);
     ax.XColor = [1 1 1];
     ax.YColor = [1 1 1];
-    
-    print(gcf,'-depsc','heatmap.eps');
-    
+        
     set (gcf, 'WindowButtonMotionFcn', @mouseMoveSimple);
 
     

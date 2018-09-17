@@ -2,11 +2,10 @@
 %   Alex Kyriazis
 %   William Choi
 % 
-% Entry point into ROI finding algorithm. This was original another group's
-% capstone project which is why it doesn't fit the same format as the rest.
-% It was just shoved into +ROI and called its own package. This file serves
+% Entry point into ROI finding algorithm. This code was originally apart of
+% another project which is why it doesn't fit the same format as the rest.
+% It was just shoved into +ROI/private and called its own package. This file serves
 % as the interface.
-%
 
 function [dpslide] = roi_finder( file_path )
 

@@ -4,7 +4,6 @@
 % Takes a folder of interface outputs and produces a collection 
 % of SAMPLE_SIZE WM patches from each.
 
-
 SAMPLE_SIZE = 10;
 OUTPUT_NAME = 'output';
 INFO_NAME = 'info';

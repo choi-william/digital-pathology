@@ -4,7 +4,7 @@
 
 % Evaluates one dataset against another in images from the class specified in set_type
 
-% label_set: the ground truth set (asma/tom/union/intersect)
+% label_set: the ground truth set (labeller1/labeller2/union/intersect)
 % prediction_set: set compared against ground truth (almost always 'algorithm')
 
 % set_type: the data being compared (train,test,validate). 
@@ -41,10 +41,10 @@ function [GT,TP,FP,FN] = evaluate_all(label_set, prediction_set,set_type,verbose
     %GET LABEL DATA
     %%%%
     switch label_set
-        case 'tom'
-            load('+Annotation_cell/cell_detection_analysis_utility/labelling/annotation_data_tom.mat');
-        case 'asma'
-            load('+Annotation_cell/cell_detection_analysis_utility/labelling/annotation_data_asma.mat');
+        case 'labeller1'
+            load('+Annotation_cell/cell_detection_analysis_utility/labelling/annotation_data_labeller1.mat');
+        case 'labeller2'
+            load('+Annotation_cell/cell_detection_analysis_utility/labelling/annotation_data_labeller2.mat');
         case 'intersect'
             load('+Annotation_cell/cell_detection_analysis_utility/labelling/annotation_data_intersect.mat');
         case 'union'
@@ -77,10 +77,10 @@ function [GT,TP,FP,FN] = evaluate_all(label_set, prediction_set,set_type,verbose
     %GET PREDICTION DATA
     %%%
     switch prediction_set
-        case 'tom'
-            load('+Annotation_cell/cell_detection_analysis_utility/labelling/annotation_data_tom.mat');
-        case 'asma'
-            load('+Annotation_cell/cell_detection_analysis_utility/labelling/annotation_data_asma.mat');
+        case 'labeller1'
+            load('+Annotation_cell/cell_detection_analysis_utility/labelling/annotation_data_labeller1.mat');
+        case 'labeller2'
+            load('+Annotation_cell/cell_detection_analysis_utility/labelling/annotation_data_labeller2.mat');
         case 'intersect'
             load('+Annotation_cell/cell_detection_analysis_utility/labelling/annotation_data_intersect.mat');
         case 'union'

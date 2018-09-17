@@ -1,6 +1,6 @@
 % University of British Columbia, Vancouver, 2017
-%   Alex Kyriazis
 %   William Choi
+%   Alex Kyriazis
 % 
 % Performs a skeleton analysis to obtain some useful morphology features
 

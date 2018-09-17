@@ -107,7 +107,7 @@ function [ flag, somas ] = resolve_clump( dpcell )
         end
         
         centr = round(sum([col,row],1)/size(row,1)); %x-y coordinates
-        good = pixelListBinarySearch(round(dpcell.pixelList),round(centr));
+        good = Tools.pixel_list_binary_search(round(dpcell.pixelList),round(centr));
         
         if (good == 0)
            continue; %not part of original soma

@@ -3,14 +3,14 @@
 %   William Choi
 
 % Compares two datasets to determine number of
-%false positives, true positives and false negatives 
+% false positives, true positives and false negatives 
 
 function [GT,TP,FP,FN] = compare_data(dpids,label_data,prediction_data)  
 
-    GT = 0;
-    TP = 0;
-    FN = 0;
-    FP = 0;
+    GT = 0; %ground truth number
+    TP = 0; %number of true positives
+    FN = 0; %number of false negatives
+    FP = 0; %number of false positives
     
     for k=1:size(dpids,1)
         dpid = dpids(k);
@@ -40,7 +40,7 @@ function [GT,TP,FP,FN] = compare_data(dpids,label_data,prediction_data)
                     continue
                 end
 
-                d = Helper.CalcDistance(point1,point2);
+                d = Tools.calc_distance(point1,point2);
                 if (d < 20)
                    dpid_FN(i) = 0;
                    dpid_FP(j) = 0;

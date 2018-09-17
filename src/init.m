@@ -2,6 +2,9 @@
 %   Alex Kyriazis
 %   William Choi
 
+% Initalizes program. This should be called before running any files.
+
+
 %close all;
 clear;
 global global_config;
@@ -13,17 +16,6 @@ rng(RANDOM_SEED);
 addpath(genpath('library'));
 addpath common;
 addpath ../src;
-
-%initialize config
-global config;
-config = IniConfig();
-config.ReadFile('../config.ini');
-
-global dataPath;
-dataPath = GetFullPath('../data');
-
-global srcPath;
-srcPath = GetFullPath('../src');
 
 %suppress warnings
 warning('off','images:initSize:adjustingMag')

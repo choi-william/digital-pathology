@@ -6,8 +6,6 @@
 %
 
 function [ cropim, rowCoord, colCoord ] = crop_image( matrix, row, col, offset )
-%CUTIMAGE Summary of this function goes here
-%   Detailed explanation goes here
 
     numrow = size(matrix,1);
     numcol = size(matrix,2);

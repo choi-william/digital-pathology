@@ -23,9 +23,7 @@ function [features,labels] = extract_data()
         features = [features; extracted_features];
                 
         labels = [labels; item(2)];
-
-        % figure;
-        % imshow([rgb2gray(image),bwim*255],'InitialMagnification',800);
+        
     end
     
 %     m = mean(features(features~=Inf));

@@ -18,11 +18,6 @@ classdef DPImage
         filename
         filepath
         id %unique identifier in our image naming system
-        originalName
-
-        %verification data
-        testPoints = 0; %list of coordinate of cells for training data
-        roiMask = 0; %an ROI mask that covers the image (for training)
         
         %average intensity
         avInt = 0;
@@ -32,39 +27,29 @@ classdef DPImage
         rawThresh;
         somaMask; %binarized version of image
         
-        %slide metadata
+        %slide metadata TODO - not implemented anywhere yet.
         mag %image magnification (multiplication factor)
         stain
         time
         age
-        date
-        group
-        
-        %injury parameters
-        elapsedTime %elapsed time since injury (hours) (unimplemented)
-        impactEnergy %injury impact energy (J) (unimplemented)
+        date        
+        elapsedTime %elapsed time since injury (hours)
+        impactEnergy %injury impact energy (J)
     end
     
     methods
         function obj = DPImage(id)
-
-            global config;
             
             if(strcmp(id,'notAFile'))
                 return;
             end
             
             obj.id = id;
-%             if ismember(id,Tools.find_dpids('v2'))
-%                 filename = strcat('../data/v2/',num2str(id),'.tif');
             if ismember(id,Tools.find_dpids('train_v3'))
                 filename = strcat('../data/train_v3/',num2str(id),'.tif');
             elseif ismember(id,Tools.find_dpids('test_v3'))
                 filename = strcat('../data/test_v3/',num2str(id),'.tif');
                 fprintf('WARNING: PULLING FROM TEST SET\n');
-            elseif startsWith(id,'s')
-                filename = strcat('../data/subImage_test/',id,'.tif');
-                fprintf('pulling from visualization set\n');
             else
                 error('cant find image anywhere');
             end
@@ -78,10 +63,6 @@ classdef DPImage
 
             if (size(obj.image,2) > size(obj.image,1))
                obj.image = permute(obj.image, [2 1 3]);
-               obj.roiMask = obj.roiMask';
-               if (size(obj.testPoints,2) == 2)
-                  obj.testPoints = [obj.testPoints(:,2), obj.testPoints(:,1)]; 
-               end
             end
 
             obj.filename = filename;
@@ -94,10 +75,6 @@ classdef DPImage
 
             if (size(obj.image,2) > size(obj.image,1))
                obj.image = permute(obj.image, [2 1 3]);
-               obj.roiMask = obj.roiMask';
-               if (size(obj.testPoints,2) == 2)
-                  obj.testPoints = [obj.testPoints(:,2), obj.testPoints(:,1)]; 
-               end
             end
         end
     end
