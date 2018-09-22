@@ -10,7 +10,7 @@
 % Segment.Soma.extract_soma() below
 
 function [ cell_list ] = cell_segmentation( dpimage, cell_classifier, morph_classifier)
-%CELL_SEGMENTATION Summary of this function goes here
+
 %   Handles cell segmentation; soma segmentation followed by processes
 %   segmentation of the cells
 

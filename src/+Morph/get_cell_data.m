@@ -25,13 +25,6 @@ function [features] = get_cell_data(image,centroid)
     [endpoints, junctions, skelIm] = Tools.skeleton_analysis(bwim);
     fractalDim = hausDim(bwim);
 
-%         imshow([image,repmat(bwim*255,1,1,3)]);
-
-%         imshow([image,repmat(bwim*255,1,1,3),repmat(skelIm*255,1,1,3)]);
-%         hold on;
-%         plot(centroid(1),centroid(2),'.','MarkerSize',20);
-%         item(2)
-
     %how branchy is it
     branch_size = sum(skelIm(:));
 

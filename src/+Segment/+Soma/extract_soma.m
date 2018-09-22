@@ -58,7 +58,7 @@ function [list,dp] = extract_soma( dpimage, cell_classifier )
         
         prepared = prepare_soma(DPCell([col,row],dpimage)); 
         % Loop through the cells since there could be multiple detected
-        % from resolving clumpsg
+        % from resolving clumps
         for j=1:size(prepared,2)
             dpcell = prepared{j}; 
             

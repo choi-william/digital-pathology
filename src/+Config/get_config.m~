@@ -38,7 +38,7 @@ function [value] = get_config(param)
         
         %classifier paths
         global_config.CELL_CLASSIFIER_PATH = '+ML/classifiers/deep_learning_model_v4.mat';  %cell classifier
-        global_config.MORPHOLOGY_CLASSIFIER_PATH = '+Morph/classifiers/morph_classifier_v1.mat';  %morphology classifier.
+        global_config.MORPHOLOGY_CLASSIFIER_PATH = '+Morph/classifiers/morph_classifier_v1.mat';  %
  
     end
     if exist('param','var')

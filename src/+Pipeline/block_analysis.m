@@ -6,7 +6,7 @@
 % Return 0 for average_morphology if the analysis type is 1.
 
 function [cell_count, average_morphology] = block_analysis( dpimage, analysis_type,cell_classifier,morph_classifier)
-%PATHOLOGY_ANALYSIS Summary of this function goes here
+
 %   analysis_type = 0 cell count & cell morphology
 %   analysis_type = 1 cell count only
 

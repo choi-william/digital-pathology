@@ -8,12 +8,8 @@
 
 function cent = mock_segment(image)
 
-    % Converting image to grayscale, increasing contrast.
-%     grayIm = rgb2gray(image);
     grayIm = image(:,:,3);
-%     darkestPixelValue = min(grayIm(:));
-%     [rowVal, colVal] = find(grayIm == darkestPixelValue);    
-    
+
     grayIm = grayIm + (255-mean(grayIm(grayIm<200)));
 
     % Mumford-Shah smoothing

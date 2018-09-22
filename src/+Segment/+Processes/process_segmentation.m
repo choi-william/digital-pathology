@@ -6,7 +6,6 @@
 % multithresholding techniques
 
 function [ bwIm ] = process_segmentation( rgbCellImage, cellCentroid )
-%CELL_SEGMENTATION Summary of this function goes here
 %   dpsoma - input soma object
 %   PRE-CONDITIONS: cellCentroid is in the object of interest
 %                   cellCentroid is in x y format

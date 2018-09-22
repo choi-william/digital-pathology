@@ -54,7 +54,7 @@ isInterfacing = true;
 1. run init.m
 -resets the configuration parameters, and sets path info.
 
-2. Execute White Matter segmentation
+2. Execute White Matter segmentation (above)
 -result is a collection of folders for each slide
 
 3. Sample the White Matter patches to get a smaller collection
@@ -170,4 +170,4 @@ common - for common class definitions, utility functions and other tools
 
 GUI - for visualizing the analyzed microglia data
 
-library - for other people's code that we source into this project
+library - for third party libraries that we source into this project

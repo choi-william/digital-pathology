@@ -6,7 +6,7 @@
 %PLEASE TAKE CARE IN SETTING THE NEXT 2 PARAMETERS
 
 SAMPLE_SIZE = 10; %samples PER brain slide
-SPLIT = 3; %X, where 1/X becomes the test set and (X-1)/X becomes the training set. This should a factor of the number of white matter patches are sampled
+SPLIT = 3; %X, where 1/X becomes the test set and (X-1)/X becomes the training set. This should a divisible factor of the number of white matter patches are sampled
 
 filePath = uigetdir('','Choose the folder');
 
