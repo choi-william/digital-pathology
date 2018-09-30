@@ -19,8 +19,7 @@ end
 
 %feature Selection and pre-processing
 
-%TRAINING DATA FEATURE EXTRACTION - ALREADY DONE (NEEDS TO BE RUN AGAIN FOR
-%(256x256) blocks
+%TRAINING DATA FEATURE EXTRACTION
 processSlides = false;
 if (processSlides)
     for i=1:NumSVSslides

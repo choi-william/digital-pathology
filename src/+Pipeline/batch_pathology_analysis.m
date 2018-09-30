@@ -9,8 +9,7 @@ function [] = batch_pathology_analysis( analysis_type )
 
     filePath = uigetdir('','Choose the folder containing the images to be analyzed.');
     
-    cd(filePath);
-    imageList = dir('**/*.tif');
+    imageList = dir(strcat(filePath,'/*.tif'));
     
     outPath = uigetdir('','Choose the folder to output the results.');
     

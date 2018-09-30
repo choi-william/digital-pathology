@@ -60,17 +60,17 @@ isInterfacing = true;
 3. Sample the White Matter patches to get a smaller collection
 execute Tools.interface_output_sampler
 
-4. Take sampled WM patches (1.tif to N.tif), put them in the +Annotation_cell/images folder
+4. Take sampled WM patches (1.tif to N.tif), put them in the +Annotation_cell/cell_detection_analysis_utility/images folder
 
 5. Label microglia positions by running the following until it says you are done:
 execute Annotation_cell.manual_label_new_image
 
-    Optionally perform a second labellin
+    Optionally perform a second labelling
     -rename +Annotation_cell/cell_detection_analysis_utility/labelling/annotation_data.mat to annotation_data_[NAME].mat
     -execute Annotation_cell.combine_data
 
 6. Check if annotation worked properly
-execute Annotation_cell.display_truth('tom'); or labeller1/labeller2/union/intersect
+execute Annotation_cell.display_truth('labeller1'); or labeller1/labeller2/union/intersect
 
 7. Split WM patches into train / test
 execute Tools.train_test_sampler; %be careful to change the parameters in the file
