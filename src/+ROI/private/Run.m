@@ -8,8 +8,7 @@ clear; clc  %#ok<*UNRCH>
 
 global TRAIN_PATH TEST_PATH  RESULTS_PATH;
 
-TRAIN_PATH   = '../data/slides/SlidesTrainDark/';
-
+TRAIN_PATH   = '../data/WMTrain/';
 
 if exist('RunTimeInfo.txt', 'file')
         [oldPath,~] = RunTimeInformation([],[],'r',0,0,0);
