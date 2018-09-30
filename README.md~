@@ -51,7 +51,7 @@ isTesting = true;
 isTrained = false;
 isInterfacing = true;
 
-NOTE: The integrated WM segmentation step in the pipeline is built so that a model is retrained every time on a static data set since it is very quick to retrain. To change this static data set, one would need to grab calculated features (on the new desired data set) from an execution of +ROI/private/brain_slide_process.m and have it saved as a mat file in +ROI/. There is currently not a programmatic method in place to do this.  
+NOTE: The integrated WM segmentation step in the pipeline is built so that a model is retrained every time on a static data set since it is very quick to do so. To change this stati 
 
 ## CELL DETECTION ANALYSIS TRAINING
 
